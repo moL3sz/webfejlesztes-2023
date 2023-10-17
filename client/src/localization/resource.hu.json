@@ -1,0 +1,15 @@
+{
+  "menu": {
+    "projects": {
+      "main": "Projektek",
+      "create": "Projekt létrehozása",
+      "own": "Saját projektjeim"
+    },
+    "user": {
+      "main": "Saját profil",
+      "ownTickets": "Saját Feladataim",
+      "dashboard": "Irányító pult",
+      "settings": "Beállítások"
+    }
+  }
+}
