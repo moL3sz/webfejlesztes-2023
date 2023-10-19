@@ -11,5 +11,32 @@
       "dashboard": "Irányító pult",
       "settings": "Beállítások"
     }
+  },
+  "title": {
+    "projectRegistrar": "Project regisztrálása",
+    "login": "Bejelentkezés",
+    "register": "Regisztrálás"
+  },
+  "label": {
+    "project": {
+      "Name": "Projekt neve",
+      "Description": "Leírás",
+      "Members": "Tagok"
+    },
+    "login": {
+      "Username": "Felhasználónév",
+      "Password": "Jelszó",
+      "passwordRevert": "Jelszó visszaállítása"
+    }
+  },
+  "caption": {
+    "projectRegistrar": "Project regisztrálása"
+  },
+  "button": {
+    "save": "Mentés",
+    "delete": "Törlés",
+    "login": "Bejelentkezés",
+    "logout": "Kijelentkezés",
+    "regsiter": "Regisztrálok"
   }
 }

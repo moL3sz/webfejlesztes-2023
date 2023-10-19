@@ -1,0 +1,15 @@
+:root{
+    --light-primary: #e8e8e8;
+    --dark-primary: #12161a;
+}
+.dx-treeview .dx-treeview-toggle-item-visibility {
+    right: 10px;
+    left: auto;
+}
+.dx-treeview .dx-treeview-node:not(.dx-treeview-node-is-leaf) {
+    padding-left: 0px !important;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.42);
+}
+.dx-treeview .dx-treeview-node:last-child {
+    border-bottom: none;
+}
