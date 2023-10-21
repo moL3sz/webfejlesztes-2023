@@ -24,9 +24,17 @@
       "Members": "Tagok"
     },
     "login": {
-      "Username": "Felhasználónév",
+      "Email": "Email cím",
       "Password": "Jelszó",
       "passwordRevert": "Jelszó visszaállítása"
+    },
+    "register": {
+      "Username": "Felhasználónév",
+      "Password": "Jelszó",
+      "PasswordConfirm": "Jelszó megerősítése",
+      "Email": "Email cím",
+      "LastName": "Vezetéknév",
+      "FirstName": "Keresztnév"
     }
   },
   "caption": {
@@ -37,6 +45,6 @@
     "delete": "Törlés",
     "login": "Bejelentkezés",
     "logout": "Kijelentkezés",
-    "regsiter": "Regisztrálok"
+    "register": "Regisztrálok"
   }
 }

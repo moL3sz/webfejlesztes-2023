@@ -8,6 +8,7 @@ import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import {routes} from "./config/routes.ts";
 import {ProjectRegistrar} from "./pages/ProjectRegistrar/ProjectRegistrar.tsx";
 import {Login} from "./pages/Login/Login.tsx";
+import {Register} from "./pages/Register/Register.tsx";
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
 							<Route path={"/"} element={null}/>
 							<Route path={routes.projects.create} element={<ProjectRegistrar/>}/>
 							<Route path={routes.login} element={<Login/>}/>
+							<Route path={routes.register} element={<Register/>}/>
 
 						</Routes>
 					</Layout>

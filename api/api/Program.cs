@@ -3,6 +3,7 @@ using api.DAL.Context;
 using api.DAL.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -49,6 +50,10 @@ builder.Services.AddAuthentication(options =>
 
 // ----- Adding DI ----- //
 builder.Services.AddInjektables();
+builder.Services.AddResponseCompression(options => {
+    options.EnableForHttps = true;
+    options.Providers.Add<GzipCompressionProvider>();
+});
 
 
 builder.Services.AddLogging();
@@ -59,6 +64,14 @@ builder.Services.AddControllers().AddJsonOptions(options => {
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowAnyOrigin", policy => {
+        policy.WithOrigins(new string[] { "http://localhost:3000" })
+        .AllowAnyMethod()
+        .AllowCredentials()
+        .AllowAnyHeader();
+    });
+});
 
 
 var app = builder.Build();
@@ -70,9 +83,14 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AllowAnyOrigin");
+
 app.UseHttpsRedirection();
 
+
 app.UseAuthorization();
+
+app.UseAuthentication();
 
 app.MapControllers();
 

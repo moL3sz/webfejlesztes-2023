@@ -1,6 +1,7 @@
 ﻿using api.API.Controllers.Common;
 using api.API.DTO.Auth;
 using api.BLL.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.API.Controllers {
@@ -15,7 +16,7 @@ namespace api.API.Controllers {
 
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginUserDTO userDTO) {
+        public async Task<IActionResult> Login([FromBody] LoginUserDTO userDTO) {
             try {
 
                 var token = await _authService.Login(userDTO);
@@ -28,7 +29,7 @@ namespace api.API.Controllers {
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterUserDTO userDTO) {
+        public async Task<IActionResult> Register([FromBody] RegisterUserDTO userDTO) {
             try {
                 await _authService.Register(userDTO);
                 return Ok();
@@ -40,6 +41,7 @@ namespace api.API.Controllers {
         }
 
         [HttpGet("getAll")]
+        [Authorize]
         public async Task<IActionResult> GetAll() {
             try {
                 var userDTOs =await _authService.GetUsers();
