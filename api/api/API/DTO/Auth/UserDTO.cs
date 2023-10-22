@@ -12,6 +12,8 @@
 
         public string FullName => $"{FirstName} {LastName}";
 
+        public required string Name {  get; set; }
+
 
     }
 }

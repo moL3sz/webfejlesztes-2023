@@ -20,34 +20,6 @@ namespace api.DAL.Entities {
         /// </summary>
         public  string? Description { get; set; }
 
-
-        /// <summary>
-        /// Jegy kategória
-        /// </summary>
-        public long? CategoryId { get; set; }
-
-        /// <summary>
-        /// Jegy prioritása
-        /// </summary>
-        public long? PriorityId { get; set; }
-
-        /// <summary>
-        /// Jegy státusza
-        /// </summary>
-        public long? StatusId { get; set; }
-
-
-        /// <summary>
-        /// Projeckt
-        /// </summary>
-        public long ProjectId { get; set; }
-
-        /// <summary>
-        /// Felelős személy
-        /// </summary>
-        public required long ResponsibleUserId { get; set; }
-
-
         // Navigation properties
         public virtual TicketCategory? Category { get; set; }
         public virtual TicketPriority? Priority { get; set; }

@@ -16,6 +16,6 @@ namespace api.DAL.Entities {
 
         // Navigation properties
 
-        public virtual ICollection<UserProject> UserProjects { get; set; }
+        public virtual ICollection<ProjectUser> UserProjects { get; set; }
     }
 }

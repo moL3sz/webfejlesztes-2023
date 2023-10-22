@@ -3,7 +3,6 @@ using api.API.DTO.Auth;
 using api.BLL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
 namespace api.API.Controllers {
 
     [Tags("Hitelesítő kontroller")]
@@ -13,7 +12,6 @@ namespace api.API.Controllers {
         public AuthController(ILogger<AuthController> logger, IAuthService authService) : base(logger) {
             _authService = authService;
         }
-
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginUserDTO userDTO) {
@@ -27,7 +25,6 @@ namespace api.API.Controllers {
                 throw;
             }
         }
-
         [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] RegisterUserDTO userDTO) {
             try {

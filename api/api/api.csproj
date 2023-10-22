@@ -32,7 +32,6 @@
 
   <ItemGroup>
     <Folder Include="API\Middlewares\" />
-    <Folder Include="DAL\Repositories\Common\" />
     <Folder Include="Shared\Exceptions\" />
   </ItemGroup>
 

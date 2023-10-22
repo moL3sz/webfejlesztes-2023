@@ -68,6 +68,14 @@ namespace api.DAL.Entities.Common
         public bool Clone {  get; set; }
 
 
+
+        /// <summary>
+        /// Verziószám
+        /// </summary>
+        [Required]
+        public long VersionNumber { get; set; }
+
+
         
 
 

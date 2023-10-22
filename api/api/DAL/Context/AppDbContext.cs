@@ -10,8 +10,8 @@ namespace api.DAL.Context
 
 
         public virtual DbSet<Project> Projects { get; set; }
-        public virtual DbSet<UserProject> UserProjects { get; set; }
-
+        public virtual DbSet<ProjectUser> ProjectUsers { get; set; }
+        public virtual DbSet<Ticket> Tickets { get; set; }
         // Dictionaries
         public virtual DbSet<TicketCategory> TicketCategories { get; set; }
         public virtual DbSet<TicketPriority> TicketPriorities { get; set; }

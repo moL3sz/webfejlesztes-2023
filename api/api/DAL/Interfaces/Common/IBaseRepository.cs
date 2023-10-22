@@ -2,17 +2,17 @@
 
 namespace api.DAL.Interfaces.Common
 {
-    public interface IBaseRepository<T> where T : BaseEntity
+    public interface IBaseRepository<T> where T : class
     {
         Task<List<T>> GetAll();
 
-        T GetById(long Id);
+        Task<T> GetById(int Id);
 
-        T Insert(T entity);
+        Task<T> Insert(T entity);
 
-        T Update(T entity);
+        Task<T> Update(T entity);
 
-        T Delete(long id);
+        Task<T> Delete(int Id);
 
     }
 }

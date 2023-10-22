@@ -7,6 +7,8 @@ namespace api.DAL.Entities
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
 
-        public long? 
+        // Navigation properties
+
+        public virtual Project? Project { get; set; }
     }
 }

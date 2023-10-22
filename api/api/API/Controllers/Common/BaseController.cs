@@ -9,8 +9,11 @@ namespace api.API.Controllers.Common {
 
         private readonly ILogger _logger;
 
+        private readonly HttpContextAccessor _contextAccessor = new HttpContextAccessor();
+
         public BaseController(ILogger logger) {
             _logger = logger;
+
         }
 
         public override Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next) {
