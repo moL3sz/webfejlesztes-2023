@@ -56,6 +56,7 @@ namespace api.BLL.Services {
             {
                new Claim(ClaimTypes.Name, user.UserName),
                new Claim(ClaimTypes.Email, user.Email),
+               new Claim(ClaimTypes.GivenName, user.FirstName[0].ToString().ToUpper() + user.LastName[0].ToString().ToUpper()),
                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 

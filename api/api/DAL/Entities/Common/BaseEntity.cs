@@ -26,13 +26,13 @@ namespace api.DAL.Entities.Common
         /// </summary>
 
         [Required]
-        public long CreatorUserId { get; set; }
+        public required string CreatorUserId { get; set; }
 
         /// <summary>
         /// Létrehozó felhasználóneve
         /// </summary>
         [Required]
-        public string CreatorUserName { get; set;}
+        public required string CreatorUserName { get; set;}
 
 
         /// <summary>
@@ -45,14 +45,14 @@ namespace api.DAL.Entities.Common
         /// Módosító felhasználó azonosító
         /// </summary>
         [Required]
-        public long UpdatorUserId { get; set; }
+        public required string UpdatorUserId { get; set; }
 
 
         /// <summary>
         /// Módosító felhasználó neve
         /// </summary>
         [Required]
-        public string UpdaterUserName { get; set; }
+        public required string UpdaterUserName { get; set; }
 
 
         /// <summary>
@@ -66,6 +66,9 @@ namespace api.DAL.Entities.Common
         /// </summary>
         [Required]
         public bool Clone {  get; set; }
+
+
+        
 
 
     }

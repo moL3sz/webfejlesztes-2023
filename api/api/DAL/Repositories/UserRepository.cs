@@ -15,5 +15,10 @@ namespace api.DAL.Repositories {
         public async Task<List<User>> GetAll() {
             return await _db.Users.ToListAsync();
         }
+
+        public async Task AssignToProject(UserProject userProject) {
+            await _db.UserProjects.AddAsync(userProject);
+            await _db.SaveChangesAsync();
+        }
     }
 }
