@@ -13,7 +13,7 @@
     }
   },
   "title": {
-    "projectRegistrar": "Project regisztrálása",
+    "projectRegistrar": "Project létrehozása",
     "login": "Bejelentkezés",
     "register": "Regisztrálás"
   },
@@ -21,7 +21,9 @@
     "project": {
       "Name": "Projekt neve",
       "Description": "Leírás",
-      "Members": "Tagok"
+      "Code": "Projekt kód",
+      "StartDate": "Kezdete",
+      "EndDate": "Vége"
     },
     "login": {
       "Email": "Email cím",
@@ -38,7 +40,7 @@
     }
   },
   "caption": {
-    "projectRegistrar": "Project regisztrálása"
+    "projectRegistrar": "Project létrehozása"
   },
   "button": {
     "save": "Mentés",
@@ -46,5 +48,10 @@
     "login": "Bejelentkezés",
     "logout": "Kijelentkezés",
     "register": "Regisztrálok"
+  },
+  "popup": {
+    "title": {
+      "addTicket": "Feladat létrehozása"
+    }
   }
 }

@@ -1,18 +1,14 @@
+import {useOwnProjects} from "./hooks/useOwnProjects.ts";
+import {Column, DataGrid, Item, Button} from "devextreme-react/data-grid";
 import {defaultDatagridConfig} from "../../../../config/dxDefault/dxDatagrid.default.ts";
-import {Button, Column, DataGrid, Item} from "devextreme-react/data-grid";
-import {useTicketList} from "../../hooks/useTicketList.ts";
-
-export const TicketList = () => {
 
 
-	const {tickets} = useTicketList();
-
-
+export const OwnProjects = () => {
+	const {projects,navigateToProject} = useOwnProjects()
 	return (
-		<div className={"dashboard-card"}>
-			<h5>Feladatok</h5>
+		<div>
 			<DataGrid
-				dataSource={tickets}
+				dataSource={projects}
 				keyExpr={"Id"}
 				{...defaultDatagridConfig}
 			>
@@ -24,14 +20,13 @@ export const TicketList = () => {
 
 				<Column dataField={"Title"}/>
 				<Column dataField={"Description"}/>
-				<Column dataField={"CategoryId"}/>
-				<Column dataField={"StatusId"}/>
-				<Column dataField={"PriorityId"}/>
+				<Column dataField={"Code"}/>
+				<Column dataField={"Start"} dataType={"date"}/>
+				<Column dataField={"End"} dataType={"date"}/>
 				<Column type={"buttons"}>
-					<Button icon={"eyeopen"} onClick={()=>{}}/>
+					<Button icon={"eyeopen"} onClick={navigateToProject}/>
 				</Column>
 			</DataGrid>
 		</div>
-
 	)
 }

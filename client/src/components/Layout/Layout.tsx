@@ -3,6 +3,7 @@ import {Navbar} from "../Navbar/Navbar.tsx";
 import {Drawer} from "devextreme-react/drawer";
 import {NavigationList} from "../NavigationList/NavigationList.tsx";
 import {useAppSelector} from "../../store/hooks.ts";
+import {ScrollView} from "devextreme-react";
 
 
 export const Layout = ({children}: LayoutProps)=>{
@@ -14,10 +15,14 @@ export const Layout = ({children}: LayoutProps)=>{
 		<main className={"content"}>
 
 			<Navbar/>
-			<Drawer minSize={50} revealMode={"expand"} render={()=><NavigationList/>} opened={opened} openedStateMode={"shrink"}>
-				<div className={"p-16"}>
-					{children}
-				</div>
+			<Drawer minSize={50} revealMode={"expand"} render={() => <NavigationList/>} opened={opened}
+					openedStateMode={"shrink"}>
+				<ScrollView className={"p-8 h-[80vh]"}>
+					<div className={"p-8"}>
+						{children}
+
+					</div>
+				</ScrollView>
 			</Drawer>
 		</main>
 	)

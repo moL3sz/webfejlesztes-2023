@@ -8,5 +8,5 @@ export const routes = {
 	},
 	login: "/login",
 	register: "/register",
-	dashboard:"/dashboard/:id",
+	dashboard:"/dashboard",
 }

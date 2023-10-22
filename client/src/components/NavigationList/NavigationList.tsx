@@ -22,6 +22,8 @@ export const NavigationList = () => {
 		<TreeView dataSource={NavigationListData}
 				  ref={treeViewRef}
 				  width={300}
+				  height={"calc(100vh - 50px)"}
+
 				  rtlEnabled={false}
 				  onItemClick={(e)=>{
 					  e.node?.expanded ? e.component.collapseItem(e.node?.key) : e.component.expandItem(e.node?.key)

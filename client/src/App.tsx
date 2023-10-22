@@ -9,6 +9,8 @@ import {routes} from "./config/routes.ts";
 import {ProjectRegistrar} from "./pages/ProjectRegistrar/ProjectRegistrar.tsx";
 import {Login} from "./pages/Login/Login.tsx";
 import {Register} from "./pages/Register/Register.tsx";
+import {Dashboard} from "./pages/Dashboard/Dashboard.tsx";
+import {ProjectDashboard} from "./pages/ProjectDashboard/ProjectDashboard.tsx";
 
 function App() {
 
@@ -22,6 +24,8 @@ function App() {
 							<Route path={routes.projects.create} element={<ProjectRegistrar/>}/>
 							<Route path={routes.login} element={<Login/>}/>
 							<Route path={routes.register} element={<Register/>}/>
+							<Route path={routes.dashboard} element={<Dashboard/>}/>
+							<Route path={routes.projects.manage} element={<ProjectDashboard/>}/>
 
 						</Routes>
 					</Layout>

@@ -6,7 +6,6 @@ import {getApi} from "../../../config/api/api.ts";
 import {url} from "../../../utils/urlConstructor.ts";
 import {defaultNotify} from "../../../config/dxDefault/toast.default.ts";
 import {useCookies} from "react-cookie";
-import {set} from "devextreme/events/core/events_engine";
 
 
 export const useLogin = ()=>{

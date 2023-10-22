@@ -12,7 +12,7 @@ export const NavigationListData: NavigationListItemGroupType[] = [
 				text: "menu.user.ownTickets"
 			},
 			{
-				path: "/",
+				path: routes.dashboard,
 				text: "menu.user.dashboard"
 			},
 			{
