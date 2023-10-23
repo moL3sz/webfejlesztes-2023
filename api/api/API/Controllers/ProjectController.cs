@@ -1,11 +1,12 @@
 ﻿using api.API.Controllers.Common;
 using api.API.DTO.Project;
 using api.BLL.Interfaces;
-using api.Shared.Attributes;
-using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.API.Controllers {
+
+    [Authorize]
     public class ProjectController : BaseController {
 
         private readonly IProjectService _service;
@@ -48,6 +49,14 @@ namespace api.API.Controllers {
         public async Task<IActionResult> Delete(int Id) {
             var deletedProject = await _service.Delete(Id);
             return Ok(deletedProject);
+        }
+
+        [HttpGet("getProjectBurnDownChart/{projectId}")]
+        
+        public async Task<IActionResult> GetProjectBurnDownChart(int projectId) {
+            var dataSet = await _service.GetProjectBurnDownChart(projectId);
+            return Ok(dataSet);
+
         }
 
     }

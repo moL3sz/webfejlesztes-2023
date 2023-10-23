@@ -5,7 +5,7 @@ using api.BLL.Interfaces.Common;
 namespace api.BLL.Interfaces {
     public interface IProjectService : IBaseService<ProjectCompactDTO,ProjectFullDTO>{
 
-      
+        Task<List<ProjectBurnDownChartDTO>> GetProjectBurnDownChart(int projectId);
 
     }
 }

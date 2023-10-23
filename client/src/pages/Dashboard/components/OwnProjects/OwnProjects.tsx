@@ -12,6 +12,7 @@ export const OwnProjects = () => {
 				dataSource={projects}
 				keyExpr={"Id"}
 				{...defaultDatagridConfig}
+				height={600}
 			>
 				<Item name="groupPanel" location="before"/>
 				<Item name="searchPanel" location="after"/>

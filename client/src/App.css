@@ -15,3 +15,6 @@
 .dx-treeview .dx-treeview-node:last-child {
     border-bottom: none;
 }
+.dxc-tooltip > div > div{
+    white-space: pre;
+}

@@ -21,7 +21,8 @@
   "title": {
     "projectRegistrar": "Project létrehozása",
     "login": "Bejelentkezés",
-    "register": "Regisztrálás"
+    "register": "Regisztrálás",
+    "dictionaryManager": "Szótár kezelő"
   },
   "label": {
     "project": {
@@ -79,6 +80,12 @@
         "Description": "Feladat leírása",
         "ResponsibleUserId": "Felelős",
         "DeadLine": "Határidő"
+      }
+    },
+    "dictionaryManager": {
+      "caption": {
+        "NameL1": "Név",
+        "NameL2": "Név (második nyelven)"
       }
     }
   }

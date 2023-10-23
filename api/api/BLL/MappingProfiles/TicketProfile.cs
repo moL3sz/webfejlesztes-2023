@@ -10,6 +10,7 @@ namespace api.BLL.MappingProfiles {
             CreateMap<Ticket, TicketFullViewDTO>().ReverseMap();
             CreateMap<Ticket, TicketCompactDTO>().ReverseMap();
             CreateMap<TicketModifiableDTO, Ticket>().ReverseMap();
+            CreateMap<TicketModifiableDTO, TicketFullViewDTO>().ReverseMap();
         }
     }
 }

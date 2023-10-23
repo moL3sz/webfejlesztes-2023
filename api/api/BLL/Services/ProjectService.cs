@@ -88,13 +88,16 @@ namespace api.BLL.Services {
         }
 
         public async Task<List<ProjectBurnDownChartDTO>> GetProjectBurnDownChart(int projectId) {
-            var tickets = await _ticketRepository.GetByProject(projectId);
 
+            var tickets = await _ticketRepository.GetByProject(projectId);
             var project = await _repo.GetById(projectId);
+
             List<ProjectBurnDownChartDTO> result = new List<ProjectBurnDownChartDTO>();
+            
+            // Step 
             for (DateTime currentDate = project.Start; currentDate <= project.End; currentDate = currentDate.AddDays(1)) {
-                var tasks = tickets.Where(x => x.DeadLine < currentDate && _ticketService.IsTicketDone(x)).Select(x=>x.Title).ToList();
-                var expectedRemainging =  tickets.Where(x => x.DeadLine < currentDate).Count();
+                var tasks = tickets.Where(x => !_ticketService.IsTicketDone(x) && DateTime.Now.AddDays(5) > currentDate).Select(x=>x.Title).ToList();
+                var expectedRemainging =  tickets.Where(x => x.DeadLine > currentDate).Count();
                 result.Add(new ProjectBurnDownChartDTO { Day = currentDate, ExpectedRemainingTasksCount = expectedRemainging, RemainingTasks = tasks });
             }
             return result;

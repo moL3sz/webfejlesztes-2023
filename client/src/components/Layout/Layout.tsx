@@ -17,10 +17,9 @@ export const Layout = ({children}: LayoutProps)=>{
 			<Navbar/>
 			<Drawer minSize={50} revealMode={"expand"} render={() => <NavigationList/>} opened={opened}
 					openedStateMode={"shrink"}>
-				<ScrollView className={"p-8 h-[80vh]"}>
+				<ScrollView className={"p-8 h-[93vh]"}>
 					<div className={"p-8"}>
 						{children}
-
 					</div>
 				</ScrollView>
 			</Drawer>

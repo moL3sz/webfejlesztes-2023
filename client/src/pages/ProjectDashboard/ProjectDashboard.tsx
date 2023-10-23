@@ -19,7 +19,8 @@ export const ProjectDashboard = () => {
 		saveTicket,
 		dataSource,
 		users,
-		ticketListRef
+		ticketListRef,
+		loadTicketById,
 	} = useProjectDashboard()
 
 	return (
@@ -40,13 +41,15 @@ export const ProjectDashboard = () => {
 					icon: "plus",
 					type: "default",
 					onClick: () => {
+						ticketFormRef.current?.instance.resetValues();
 						addTicketPopupRef.current?.instance.show();
 					}
 				}}/>
 			</Toolbar>
 			<div className={"project-container grid md:grid-cols-1 lg:grid-cols-2 grid-cols-1 gap-5"}>
 				<DashboardCard colSpan={"full"}>
-					<TicketList ref={ticketListRef} formRef={ticketFormRef} popUpRef={addTicketPopupRef}/>
+					<TicketList ref={ticketListRef} formRef={ticketFormRef} loadTicket={loadTicketById}
+								popUpRef={addTicketPopupRef}/>
 				</DashboardCard>
 				<DashboardCard>
 				<BurnDownChart/>
@@ -61,7 +64,7 @@ export const ProjectDashboard = () => {
 				   title={t("popup.title.addTicket")}
 				   ref={addTicketPopupRef}
 				   onHiding={(e) => {
-					   ticketFormRef.current?.instance.resetValues();
+					   ticketFormRef.current?.instance.resetOption("isEditing");
 					   e.component.hide();
 				   }}
 			>

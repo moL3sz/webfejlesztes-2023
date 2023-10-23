@@ -61,7 +61,7 @@ namespace api.BLL.Services {
 
 
         public async Task<BaseDictionaryDTO> Update(dynamic dto) {        
-            var updatedEntity = await _repo.PartialUpdate(_entityType, dto);
+            var updatedEntity =  _repo.PartialUpdate(_entityType, dto);
             return _mapper.Map<BaseDictionaryDTO>(updatedEntity);
         }
 

@@ -24,8 +24,9 @@ namespace api.API.Controllers {
  
         }
 
-        [HttpPost("{EntityName}/insert")]
-        public async Task<IActionResult> Insert([FromBody] BaseDictionaryDTO dto) {
+        [HttpPost("{EntityName}/insert/{projectId}")]
+        public async Task<IActionResult> Insert([FromBody] BaseDictionaryDTO dto, int projectId) {
+            dto.ProjectId = projectId;
             _service.ParseRequestUrl(Request.Path);
             try {
                 var newDto = await _service.Insert(dto);
@@ -39,8 +40,10 @@ namespace api.API.Controllers {
 
         }
 
-        [HttpPut("{EntityName}/update")]
-        public async Task<IActionResult> Update([FromBody] BaseDictionaryDTO dto) {
+        [HttpPut("{EntityName}/update/{projectId}")]
+        public async Task<IActionResult> Update([FromBody] BaseDictionaryDTO dto, int projectId) {
+            dto.ProjectId = projectId;
+
             _service.ParseRequestUrl(Request.Path);
             try {
                 var modifiedDto = await _service.Update(dto);
@@ -54,6 +57,7 @@ namespace api.API.Controllers {
 
         [HttpDelete("{EntityName}/delete/{Id}")]
         public async Task Delete(int Id) {
+
             _service.ParseRequestUrl(Request.Path);
             await _service.Delete(Id);
         }

@@ -1,6 +1,5 @@
 import {defaultDatagridConfig} from "../../../../config/dxDefault/dxDatagrid.default.ts";
 import {Button, Column, DataGrid, Item, Lookup} from "devextreme-react/data-grid";
-import {useTicketList} from "../../hooks/useTicketList.ts";
 import {stripHTML} from "../../../../utils/html.util.ts";
 import {useDataSource} from "../../../../core/hooks/useDatasources.ts";
 import {useTranslation} from "react-i18next";
@@ -8,19 +7,21 @@ import {forwardRef, RefObject, useImperativeHandle, useRef} from "react";
 import {Form, Popup, Tooltip} from "devextreme-react";
 import {useGetUsersByProject} from "../../../../core/hooks/useGetUsers.ts";
 import {useParams} from "react-router-dom";
+import {datagridStore} from "../../../../core/datagridStore.ts";
+import {url} from "../../../../utils/urlConstructor.ts";
 
 
 type  TicketListProps = {
 	popUpRef: RefObject<Popup>
 	formRef: RefObject<Form>
+	loadTicket:any
 }
 export type TicketListRef = {
 	update: () => void
 }
-export const TicketList = forwardRef<TicketListRef, TicketListProps>(({popUpRef, formRef}: TicketListProps, ref) => {
+export const TicketList = forwardRef<TicketListRef, TicketListProps>(({popUpRef, formRef,loadTicket}: TicketListProps, ref) => {
 
 
-	const {tickets, fetchTickets} = useTicketList();
 	const dataSource = useDataSource(["TicketCategory", "TicketStatus", "TicketPriority"] as const)
 	const {t} = useTranslation()
 	const {id} = useParams<{ id: string }>()
@@ -28,7 +29,7 @@ export const TicketList = forwardRef<TicketListRef, TicketListProps>(({popUpRef,
 	const dgRef = useRef<DataGrid>(null)
 	useImperativeHandle(ref, () => ({
 		update() {
-			fetchTickets();
+			dgRef.current?.instance.refresh();
 		}
 	}));
 
@@ -37,14 +38,18 @@ export const TicketList = forwardRef<TicketListRef, TicketListProps>(({popUpRef,
 			<h5>Feladatok</h5>
 			<DataGrid
 				ref={dgRef}
-				dataSource={tickets}
-				keyExpr={"Id"}
+				dataSource={datagridStore({
+					key: "Id",
+					loadUrl: url({
+						controller: "Ticket",
+						action: "getAllByProject",
+						parameter: id
+					})
+				})}
 				{...defaultDatagridConfig}
-				editing={{
-					allowUpdating: true,
-					mode: "popup"
-				}}
+
 			>
+
 				<Item name="groupPanel" location="before"/>
 				<Item name="searchPanel" location="after"/>
 				<Item name="columnChooserButton" location="after"/>
@@ -53,7 +58,7 @@ export const TicketList = forwardRef<TicketListRef, TicketListProps>(({popUpRef,
 
 				<Column dataField={"ResponsibleUserId"} caption={t("table.ticketList.caption.ResponsibleUserId")}
 						cellRender={(data) => {
-							const target = `ticket_${data.key}`;
+							const target = `ticket_${data.row.data.Id}`;
 							return data.text ? <>
 								<div className={"user-banner bg-yellow-600 text-[12px] w-7 h-7"} id={target}>
 									{data.text.split(" ")[0][0] + data.text.split(" ")[1][0]}
@@ -84,13 +89,12 @@ export const TicketList = forwardRef<TicketListRef, TicketListProps>(({popUpRef,
 
 				<Column type={"buttons"}>
 					<Button icon={"eyeopen"} onClick={(data) => {
+						loadTicket(data.row.key).then((data:any)=>{
+							formRef.current?.instance.option("formData", data);
 
-						popUpRef.current?.instance.show();
-						formRef.current?.instance.beginUpdate()
+						})
 						formRef.current?.instance.option("isEditing", true);
-						formRef.current?.instance.option("formData", data.row.data);
-						formRef.current?.instance.endUpdate()
-
+						popUpRef.current?.instance.show();
 
 					}}/>
 				</Column>

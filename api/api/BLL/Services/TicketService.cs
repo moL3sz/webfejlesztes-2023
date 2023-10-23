@@ -45,7 +45,7 @@ namespace api.BLL.Services {
 
         public async Task<TicketFullViewDTO> Update(dynamic dto) {
             var entity = _repo.PartialUpdate<Ticket>(dto);
-            var modifiedDto = _mapper.Map<TicketModifiableDTO>(entity);
+            var modifiedDto = _mapper.Map<TicketFullViewDTO>(entity);
             return modifiedDto;
         }
         public async Task<TicketFullViewDTO> Delete(int id) {

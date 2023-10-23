@@ -31,7 +31,12 @@ export const NavigationList = memo(() => {
 			return !(x.role == RoleEnum.ADMIN && !admin);
 
 		});
-		treeViewRef.current?.instance.option("items", items)
+		const parsed = items.map(x => ({
+			...x, items: x.items?.map(y => ({
+				...y, path: y.path.replace(":id", id?.toString() || "")
+			}))
+		}))
+		treeViewRef.current?.instance.option("items", parsed)
 	}, [id, admin])
 
 	return (

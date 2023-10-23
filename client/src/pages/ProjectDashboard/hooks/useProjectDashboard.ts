@@ -36,17 +36,30 @@ export const useProjectDashboard = () => {
 		setProject(response.data)
 	}, [id])
 
+	const loadTicketById = useCallback(async (ticketId: string | number) => {
+		const response = await getApi().get(url({
+			controller: "Ticket",
+			action: Actions.GET_BY_ID,
+			parameter: ticketId.toString()
+		}))
+		return response.data
+	}, [])
+
 	const saveTicket = useCallback(async () => {
 		const validationStatus = ticketFormRef.current?.instance.validate();
-
+		const isEditing = ticketFormRef.current?.instance.option("isEditing");
+		console.log(isEditing)
 		if (!validationStatus?.isValid) return;
 
 		let formData = ticketFormRef.current?.instance.option("formData");
 		formData = {...formData, ProjectId: id}
-		await getApi().post(url({
+		await getApi()(url({
 			controller: "Ticket",
-			action: Actions.INSERT,
-		}), formData)
+			action: isEditing ? Actions.UPDATE : Actions.INSERT,
+		}), {
+			method: isEditing ? "PUT" : "POST",
+			data: formData
+		})
 
 		defaultNotify("Sikeresen létrehoztad a feladatot", "success")
 		addTicketPopupRef.current?.instance.hide()
@@ -64,6 +77,16 @@ export const useProjectDashboard = () => {
 	}, [])
 
 
-	return {project, addTicketPopupRef, ticketFormRef, t, saveTicket, dataSource, users, ticketListRef}
+	return {
+		project,
+		addTicketPopupRef,
+		ticketFormRef,
+		t,
+		saveTicket,
+		dataSource,
+		users,
+		ticketListRef,
+		loadTicketById,
+	}
 
 }
