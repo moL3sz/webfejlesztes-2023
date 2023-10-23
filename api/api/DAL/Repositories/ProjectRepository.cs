@@ -34,18 +34,7 @@ namespace api.DAL.Repositories {
         public async Task<Project> Insert(Project entity) {
             await _db.Projects.AddAsync(entity);
             var User = await _db.Users.FindAsync(entity.CreatorUserId);
-            _db.ProjectUsers.Add(new ProjectUser {
-                Project = entity,
-                User = User,
-                Active = true,
-                CreatorUserId = entity.CreatorUserId,
-                Updated = DateTime.Now,
-                CreatorUserName = entity.CreatorUserName,
-                Clone = false,
-                Created = DateTime.Now,
-                UpdaterUserName = entity.UpdaterUserName,
-                UpdatorUserId = entity.UpdatorUserId,
-            });
+           
             await _db.SaveChangesAsync();
             return entity;
         }

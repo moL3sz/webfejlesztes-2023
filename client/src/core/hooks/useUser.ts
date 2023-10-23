@@ -1,10 +1,10 @@
-import {useAppDispatch, useAppSelector} from "../../../store/hooks.ts";
+import {useAppDispatch, useAppSelector} from "../../store/hooks.ts";
 import {useEffect, useState} from "react";
 import {useCookies} from "react-cookie";
-import {setUserData} from "../../../store/userSlice/user.slice.ts";
+import {setUserData} from "../../store/userSlice/user.slice.ts";
 import jwt from "jwt-decode"
-import {UserType} from "../../../store/@types/user.type.ts";
-import {getApi} from "../../../config/api/api.ts";
+import {UserType} from "../../store/@types/user.type.ts";
+import {getApi} from "../../config/api/api.ts";
 
 export const useUser = ()=>{
 
@@ -17,8 +17,6 @@ export const useUser = ()=>{
 	useEffect(()=>{
 		if(cookies.AUTH_TOKEN){
 			const userDecoded = jwt(cookies.AUTH_TOKEN) as UserType;
-			console.log(userDecoded)
-
 			getApi().defaults.headers["Authorization"] = "Bearer " + cookies.AUTH_TOKEN;
 			dispatch(setUserData(userDecoded))
 			setAuthenticated(true)

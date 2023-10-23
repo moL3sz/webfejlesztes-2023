@@ -11,13 +11,19 @@ import {Login} from "./pages/Login/Login.tsx";
 import {Register} from "./pages/Register/Register.tsx";
 import {Dashboard} from "./pages/Dashboard/Dashboard.tsx";
 import {ProjectDashboard} from "./pages/ProjectDashboard/ProjectDashboard.tsx";
+import {loadMessages, locale} from "devextreme/localization";
 
+import huMessages from "devextreme/localization/messages/hu.json";
+import enMessages from "devextreme/localization/messages/en.json";
 function App() {
-
+	loadMessages(huMessages);
+	loadMessages(enMessages);
+	locale(localStorage.getItem("i18nextLng") || navigator.language);
 	return (
 		<Provider store={store}>
 			<I18nextProvider i18n={i18next}>
 				<Router>
+
 					<Layout>
 						<Routes>
 							<Route path={"/"} element={null}/>

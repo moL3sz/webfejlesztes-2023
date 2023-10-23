@@ -1,5 +1,6 @@
 import {NavigationListItemGroupType} from "./@types/navigationListItem.type.ts";
 import {routes} from "./routes.ts";
+import {RoleEnum} from "../core/enums/role.enum.ts";
 
 
 export const NavigationListData: NavigationListItemGroupType[] = [
@@ -8,28 +9,37 @@ export const NavigationListData: NavigationListItemGroupType[] = [
 		text: "menu.user.main",
 		items: [
 			{
-				path: "/",
-				text: "menu.user.ownTickets"
-			},
-			{
+				icon: "home",
 				path: routes.dashboard,
 				text: "menu.user.dashboard"
-			},
-			{
-				path: "/",
-				text: "menu.user.settings"
-			}
-		]
+			}]
 	},
 	{
 		icon: "toolbox",
 		text: "menu.projects.main",
 		items: [{
+			icon: "plus",
 			path: routes.projects.create,
 			text: "menu.projects.create"
+		}]
+	},
+	{
+		icon: "folder",
+		text: "menu.data.main",
+		inProject: true,
+		role: RoleEnum.ADMIN,
+		items: [{
+			icon: "minus",
+			path: routes.projects.manage + "/data/TicketCategory",
+			text: "menu.data.TicketCategory"
 		}, {
-			path: "/",
-			text: "menu.projects.own"
+			icon: "minus",
+			path: routes.projects.manage + "/data/TicketStatus",
+			text: "menu.data.TicketPriority"
+		}, {
+			icon: "minus",
+			path: routes.projects.manage + "/data/TicketPriority",
+			text: "menu.data.TicketPriority"
 		}]
 	},
 

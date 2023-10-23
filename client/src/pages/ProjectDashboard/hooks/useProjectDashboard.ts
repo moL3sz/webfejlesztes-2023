@@ -6,32 +6,64 @@ import {url} from "../../../utils/urlConstructor.ts";
 import {Actions} from "../../../config/api/actions.enum.ts";
 import {Form, Popup} from "devextreme-react";
 import {useTranslation} from "react-i18next";
+import {useDataSource} from "../../../core/hooks/useDatasources.ts";
+import {useGetUsersByProject} from "../../../core/hooks/useGetUsers.ts";
+import {useAppDispatch} from "../../../store/hooks.ts";
+import {setCurrentProjectId} from "../../../store/currentProject/drawer.slice.ts";
+import {defaultNotify} from "../../../config/dxDefault/toast.default.ts";
+import {TicketListRef} from "../components/TicketList/TicketList.tsx";
 
 
-export const useProjectDashboard = ()=>{
+export const useProjectDashboard = () => {
 
-	const {id} = useParams<{id:string}>();
+	const {id} = useParams<{ id: string }>();
 	const [project, setProject] = useState<ProjectFullDTOType>();
 	const {t} = useTranslation();
+	const {users} = useGetUsersByProject(id!)
+	const dispatch = useAppDispatch()
 
 	const addTicketPopupRef = useRef<Popup>(null)
 	const ticketFormRef = useRef<Form>(null)
+	const dataSource = useDataSource(["TicketCategory", "TicketStatus", "TicketPriority"] as const)
+	const ticketListRef = useRef<TicketListRef>(null)
 
-
-	const loadProject = useCallback(async ()=>{
+	const loadProject = useCallback(async () => {
 		const response = await getApi().get<ProjectFullDTOType>(url({
 			controller: "Project",
-			action:Actions.GET_BY_ID,
+			action: Actions.GET_BY_ID,
 			parameter: id
 		}))
 		setProject(response.data)
-	},[id])
+	}, [id])
 
-	useEffect(()=>{
+	const saveTicket = useCallback(async () => {
+		const validationStatus = ticketFormRef.current?.instance.validate();
+
+		if (!validationStatus?.isValid) return;
+
+		let formData = ticketFormRef.current?.instance.option("formData");
+		formData = {...formData, ProjectId: id}
+		await getApi().post(url({
+			controller: "Ticket",
+			action: Actions.INSERT,
+		}), formData)
+
+		defaultNotify("Sikeresen létrehoztad a feladatot", "success")
+		addTicketPopupRef.current?.instance.hide()
+		ticketListRef.current?.update();
+
+	}, [id])
+
+
+	useEffect(() => {
 		loadProject()
-	},[loadProject])
+		dispatch(setCurrentProjectId(id!))
+		return () => {
+			dispatch(setCurrentProjectId(null))
+		}
+	}, [])
 
 
-	return {project, addTicketPopupRef,ticketFormRef,t}
+	return {project, addTicketPopupRef, ticketFormRef, t, saveTicket, dataSource, users, ticketListRef}
 
 }

@@ -6,7 +6,7 @@ namespace api.DAL.Interfaces {
         Task AddUserToProjectAsync(ProjectUser projectUser);
 
         Task<List<Project>> GetProjectsByUser(string userId);
-        Task<List<User>> GetUsersByProject(long projectId);
+        Task<List<User>> GetUsersByProject(int projectId);
         Task RemoveUserFromProjectAsync(ProjectUser projectUser);
     }
 }

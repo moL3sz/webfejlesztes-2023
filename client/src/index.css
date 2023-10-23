@@ -21,3 +21,8 @@ div.user-banner{
     width: 100%;
     border-top: 1px solid #5b5b5b
 }
+.dx-item-content.dx-treeview-item-content > i{
+    margin-right: 1em !important;
+    margin-left: 0.3em !important;
+    font-size: medium !important;
+}

@@ -5,6 +5,12 @@
       "create": "Projekt létrehozása",
       "own": "Saját projektjeim"
     },
+    "data": {
+      "main": "Adatok",
+      "TicketPriority": "Feladat prioritás",
+      "TicketStatus": "Feladat stáusza",
+      "TicketCategory": "Feladat kategória"
+    },
     "user": {
       "main": "Saját profil",
       "ownTickets": "Saját Feladataim",
@@ -37,6 +43,15 @@
       "Email": "Email cím",
       "LastName": "Vezetéknév",
       "FirstName": "Keresztnév"
+    },
+    "ticket": {
+      "CategoryId": "Kategória",
+      "StatusId": "Státusz",
+      "PriorityId": "Prioritás",
+      "Title": "Feladat neve",
+      "Description": "Feladat leírása",
+      "ResponsibleUserId": "Felelős",
+      "DeadLine": "Határidő"
     }
   },
   "caption": {
@@ -52,6 +67,19 @@
   "popup": {
     "title": {
       "addTicket": "Feladat létrehozása"
+    }
+  },
+  "table": {
+    "ticketList": {
+      "caption": {
+        "CategoryId": "Kategória",
+        "StatusId": "Státusz",
+        "PriorityId": "Prioritás",
+        "Title": "Feladat neve",
+        "Description": "Feladat leírása",
+        "ResponsibleUserId": "Felelős",
+        "DeadLine": "Határidő"
+      }
     }
   }
 }

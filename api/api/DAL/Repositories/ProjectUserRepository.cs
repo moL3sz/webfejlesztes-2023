@@ -13,21 +13,20 @@ namespace api.DAL.Repositories {
         }
 
         public async Task AddUserToProjectAsync(ProjectUser projectUser) {
-          
-                _db.ProjectUsers.Add(projectUser);
-                await _db.SaveChangesAsync();
+
+            _db.ProjectUsers.Add(projectUser);
+            await _db.SaveChangesAsync();
         }
 
         public async Task<List<Project>> GetProjectsByUser(string userId) {
-            return await _db.ProjectUsers.Include(x=>x.User)
-                .Include(x=>x.Project)
-                .Where(x=>x.User.Id == userId).Select(x=>x.Project).ToListAsync();
+            return await _db.ProjectUsers
+                .Include(x => x.Project)
+                .Where(x => x.UserId == userId).Select(x => x.Project).ToListAsync();
         }
 
-        public async Task<List<User>> GetUsersByProject(long projectId) {
+        public async Task<List<User>> GetUsersByProject(int projectId) {
             return await _db.ProjectUsers.Include(x => x.User)
-             .Include(x => x.Project)
-             .Where(x => x.Project.Id == projectId).Select(x => x.User).ToListAsync();
+             .Where(x => x.ProjectId == projectId).Select(x => x.User).ToListAsync();
         }
 
         public async Task RemoveUserFromProjectAsync(ProjectUser projectUser) {

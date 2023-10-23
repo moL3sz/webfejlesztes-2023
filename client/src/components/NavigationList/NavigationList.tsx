@@ -1,44 +1,57 @@
 import {NavigationListData} from "../../config/navigation.ts";
 import {TreeView} from "devextreme-react";
-import {NavigationGroupItem} from "./NavigationGroupItem.tsx";
 import {useAppDispatch, useAppSelector} from "../../store/hooks.ts";
 import {openDrawer} from "../../store/drawerSlice/drawer.slice.ts";
-import {useEffect, useRef} from "react";
+import {memo, useEffect, useRef} from "react";
 import {useNavigate} from "react-router-dom";
+import {useIsAdminInProject} from "../../core/hooks/useIsAdminInProject.ts";
+import {RoleEnum} from "../../core/enums/role.enum.ts";
+import {useTranslation} from "react-i18next";
 
 
-export const NavigationList = () => {
+export const NavigationList = memo(() => {
 	const dispatch = useAppDispatch();
 	const opened = useAppSelector(state => state.drawer.opened);
 	const treeViewRef = useRef<TreeView>(null)
-	useEffect(()=>{
-		if(!opened){
-			console.log("asdsa")
+	useEffect(() => {
+		if (!opened) {
 			treeViewRef.current?.instance.collapseAll();
 		}
-	},[opened])
+	}, [opened])
 	const navigate = useNavigate();
-	return (
-		<TreeView dataSource={NavigationListData}
-				  ref={treeViewRef}
-				  width={300}
-				  height={"calc(100vh - 50px)"}
+	const id = useAppSelector(state => state.currentProject.currentProjectId)
+	const admin = useIsAdminInProject();
+	const {t} = useTranslation();
 
-				  rtlEnabled={false}
-				  onItemClick={(e)=>{
-					  e.node?.expanded ? e.component.collapseItem(e.node?.key) : e.component.expandItem(e.node?.key)
-					  if(!opened){
-						  dispatch(openDrawer())
-					  }
-					  if(e.node?.children?.length == 0){
-						navigate(e.node.itemData?.path)
-					  }
-				  }}
-				  expandAllEnabled={true}
-				  className={"bg-zinc-800"}
-			itemRender={(data:any)=>{
-				return <NavigationGroupItem {...data}/>
+	useEffect(() => {
+		const items = NavigationListData.filter(x => {
+			if (x.inProject && !id) {
+				return false
+			}
+			return !(x.role == RoleEnum.ADMIN && !admin);
+
+		});
+		treeViewRef.current?.instance.option("items", items)
+	}, [id, admin])
+
+	return (
+		<TreeView
+			ref={treeViewRef}
+			width={300}
+			height={"calc(100vh - 50px)"}
+			displayExpr={({text})=>t(text || "")}
+			onItemClick={(e) => {
+				e.node?.expanded ? e.component.collapseItem(e.node?.key) : e.component.expandItem(e.node?.key)
+				if (!opened) {
+					dispatch(openDrawer())
+				}
+				if (e.node?.children?.length == 0) {
+					navigate(e.node.itemData?.path)
+				}
 			}}
+			expandAllEnabled={true}
+			className={"bg-zinc-800"}
+
 		/>
 	)
-}
+})

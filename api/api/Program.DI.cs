@@ -19,6 +19,9 @@ namespace api
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IProjectService, ProjectService>();
             services.AddScoped<IProjectUserService, ProjectUserService>();
+            services.AddScoped<ITicketService, TicketService>();
+            services.AddScoped<IDictionaryService, DictionaryService>();
+            services.AddScoped<IJWTHandler, JWTHandler>();
 
 
 
@@ -26,6 +29,8 @@ namespace api
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IProjectRepository, ProjectRepository>();
             services.AddScoped<IProjectUserRepository, ProjectUserRepository>();
+            services.AddScoped<ITicketRepository, TicketRepository>();
+            services.AddScoped<IDictionaryManagerRepository, DictionaryManagerRepository>();
 
 
 

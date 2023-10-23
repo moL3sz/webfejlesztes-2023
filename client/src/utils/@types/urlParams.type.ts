@@ -6,3 +6,8 @@ export type UrlParamsType = {
 	action: Actions | string
 	parameter?: string
 }
+export type DicUrlType = {
+	dictionaryName: string,
+	action: Actions | string
+	projectId: number | string | undefined
+}

@@ -19,5 +19,8 @@ namespace api.API.Controllers.Common {
         public override Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next) {
             return base.OnActionExecutionAsync(context, next);
         }
+        public override void OnActionExecuted(ActionExecutedContext context) {
+            base.OnActionExecuted(context);
+        }
     }
 }

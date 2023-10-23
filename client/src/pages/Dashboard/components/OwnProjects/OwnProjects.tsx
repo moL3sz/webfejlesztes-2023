@@ -1,6 +1,7 @@
 import {useOwnProjects} from "./hooks/useOwnProjects.ts";
 import {Column, DataGrid, Item, Button} from "devextreme-react/data-grid";
 import {defaultDatagridConfig} from "../../../../config/dxDefault/dxDatagrid.default.ts";
+import {stripHTML} from "../../../../utils/html.util.ts";
 
 
 export const OwnProjects = () => {
@@ -19,7 +20,7 @@ export const OwnProjects = () => {
 				<Item name="exportButton" location="after"/>
 
 				<Column dataField={"Title"}/>
-				<Column dataField={"Description"}/>
+				<Column dataField={"Description"} cellRender={(data)=><div>{stripHTML(data.value || "")}</div>}/>
 				<Column dataField={"Code"}/>
 				<Column dataField={"Start"} dataType={"date"}/>
 				<Column dataField={"End"} dataType={"date"}/>

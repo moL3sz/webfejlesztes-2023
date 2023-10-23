@@ -13,9 +13,9 @@ namespace api.DAL.Context
         public virtual DbSet<ProjectUser> ProjectUsers { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
         // Dictionaries
-        public virtual DbSet<TicketCategory> TicketCategories { get; set; }
-        public virtual DbSet<TicketPriority> TicketPriorities { get; set; }
-        public virtual DbSet<TicketStatus> TicketStatuses { get; set; }
+        public virtual DbSet<TicketCategory> TicketCategory { get; set; }
+        public virtual DbSet<TicketPriority> TicketPriority { get; set; }
+        public virtual DbSet<TicketStatus> TicketStatus{ get; set; }
 
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {
 

@@ -8,4 +8,5 @@ export enum Actions {
 	UPDATE = "update",
 	DELETE = "delete",
 	GET_BY_ID = "getById",
+	GET_ALL_BY_PROJECT = "getAllByProject",
 }

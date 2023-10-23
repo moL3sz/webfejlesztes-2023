@@ -1,4 +1,5 @@
 ﻿using api.DAL.Entities.Common;
+using System.ComponentModel;
 
 namespace api.DAL.Entities {
     public class Project : BaseEntity {
@@ -11,6 +12,8 @@ namespace api.DAL.Entities {
 
         public DateTime Start {  get; set; }
         public DateTime End { get; set; }
+
+        public required int SprintLenght { get; set; }
 
 
 

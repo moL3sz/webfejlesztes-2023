@@ -57,5 +57,12 @@ namespace api.DAL.Repositories {
         public object PartialUpdate(Type entityType, object entity) {
             return _partialUpdater.PartialUpdate(entityType, entity);
         }
+
+        public async Task<List<Ticket>> GetByProject(int projectId) {
+            return await _db.Tickets
+                .Include(x=>x.Status)
+                .Where(x=>x.Active && !x.Clone && x.ProjectId == projectId)
+                .ToListAsync();
+        }
     }
 }

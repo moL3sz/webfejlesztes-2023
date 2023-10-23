@@ -22,5 +22,14 @@ namespace api.API.Controllers {
             return Ok(projects);
         
         }
+        [Authorize]
+        [HttpGet("getUsersByProject/{projectId}")]
+
+        public async Task<IActionResult> GetProjectsByUser(int projectId) {
+
+            var users = await _projectUserService.GetUsersByProject(projectId);
+            return Ok(users);
+
+        }
     }
 }

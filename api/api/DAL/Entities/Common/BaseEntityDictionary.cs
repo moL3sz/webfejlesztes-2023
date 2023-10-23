@@ -11,5 +11,9 @@
         /// Név második nyelven
         /// </summary>
         public string? NameL2 { get; set; }
+
+        public int? ProjectId { get; set; }
+
+        public virtual Project? Project { get; set; }
     }
 }

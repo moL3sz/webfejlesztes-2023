@@ -9,13 +9,12 @@ namespace api.API.Controllers {
     public class ProjectController : BaseController {
 
         private readonly IProjectService _service;
-        private readonly Mapper _mapper;
-        public ProjectController(ILogger<ProjectController> logger, IProjectService service) : base(logger) {
+        private readonly IJWTHandler _jwt;
+
+        public ProjectController(ILogger<ProjectController> logger, IProjectService service, IJWTHandler jwt) : base(logger) {
             _service = service;
-            _mapper = new Mapper(new MapperConfiguration(cfg => {
-                cfg.CreateMap<ProjectFullDTO, ProjectModifiableDTO>().ReverseMap();
-            }));
-            
+           
+            _jwt = jwt;
         }
 
 
@@ -24,6 +23,7 @@ namespace api.API.Controllers {
             var projects = await _service.GetAll();
             return Ok(projects);
         }
+
 
         [HttpGet("getById/{Id}")]
         public async Task<IActionResult> GetById(int Id) {
@@ -35,6 +35,7 @@ namespace api.API.Controllers {
         [HttpPost("insert")]
         public async Task<IActionResult> Insert([FromBody] ProjectFullDTO dto) {
             var newProject = await _service.Insert(dto);
+            await _jwt.AddJWTToResponse(Response);
             return Ok(newProject);
         }
         [HttpPut("update")]

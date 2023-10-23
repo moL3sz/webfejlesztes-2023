@@ -1,4 +1,4 @@
-import {useUser} from "../../../../../core/auth/hooks/useUser.ts";
+import {useUser} from "../../../../../core/hooks/useUser.ts";
 import {useCallback, useEffect, useState} from "react";
 import {getApi} from "../../../../../config/api/api.ts";
 import {url} from "../../../../../utils/urlConstructor.ts";
@@ -11,7 +11,7 @@ export  const useOwnProjects = ()=>{
 	const navigate = useNavigate();
 
 	const getOwnProjects = useCallback(async ()=>{
-
+		if(!user) return;
 		const response = await getApi().get(url({
 			controller: "ProjectUser",
 			action: "getProjectsByUser",

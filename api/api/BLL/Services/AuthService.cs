@@ -20,8 +20,9 @@ namespace api.BLL.Services {
         private readonly ILogger<AuthService> _logger;
         private readonly IUserRepository _userRepository;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IUserHelper _userHelper;
 
-        public AuthService(UserManager<User> userManager, IConfiguration configuration, ILogger<AuthService> logger, IUserRepository userRepository, RoleManager<IdentityRole> roleManager) {
+        public AuthService(UserManager<User> userManager, IConfiguration configuration, ILogger<AuthService> logger, IUserRepository userRepository, RoleManager<IdentityRole> roleManager, IUserHelper userHelper) {
             _userManager = userManager;
             _configuration = configuration;
             _mapper = new Mapper(new MapperConfiguration(cfg => {
@@ -31,13 +32,60 @@ namespace api.BLL.Services {
             _logger = logger;
             _userRepository = userRepository;
             _roleManager = roleManager;
+            _userHelper = userHelper;
         }
 
         public async Task<List<UserDTO>> GetUsers() {
             var users = await _userRepository.GetAll();
             return _mapper.Map<List<UserDTO>>(users);
-        
+
         }
+
+        #region User Claims
+        public async Task<List<Claim>> GetUserClaims() {
+            var user = await _userHelper.GetCurrentUser();
+            if (user == null) {
+                throw new UnauthorizedAccessException();
+            }
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            var authClaims = new List<Claim>
+            {
+               new Claim(ClaimTypes.Name, user.UserName),
+               new Claim(ClaimTypes.Email, user.Email),
+               new Claim(ClaimTypes.GivenName, user.FirstName[0].ToString().ToUpper() + user.LastName[0].ToString().ToUpper()),
+               new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+               new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            };
+
+            foreach (var userRole in userRoles) {
+                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+            }
+            return authClaims;
+        }
+        private async Task<List<Claim>> GetUserClaims(User user) {
+
+            if (user == null) {
+                throw new UnauthorizedAccessException();
+            }
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            var authClaims = new List<Claim>
+            {
+               new Claim(ClaimTypes.Name, user.UserName),
+               new Claim(ClaimTypes.Email, user.Email),
+               new Claim(ClaimTypes.GivenName, user.FirstName[0].ToString().ToUpper() + user.LastName[0].ToString().ToUpper()),
+               new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+               new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            };
+
+            foreach (var userRole in userRoles) {
+                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
+            }
+            return authClaims;
+        }
+
+        #endregion
 
         public async Task<string> Login(LoginUserDTO userDTO) {
             _logger.LogInformation("User is going to login" + userDTO.Email);
@@ -51,21 +99,9 @@ namespace api.BLL.Services {
 
             _logger.LogInformation("Successful login!");
 
-            var userRoles = await _userManager.GetRolesAsync(user);
-            var authClaims = new List<Claim>
-            {
-               new Claim(ClaimTypes.Name, user.UserName),
-               new Claim(ClaimTypes.Email, user.Email),
-               new Claim(ClaimTypes.GivenName, user.FirstName[0].ToString().ToUpper() + user.LastName[0].ToString().ToUpper()),
-               new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-               new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            };
 
-            foreach (var userRole in userRoles) {
-                authClaims.Add(new Claim(ClaimTypes.Role, userRole));
-            }
-
-            return GenerateToken(authClaims);
+            var claims = await this.GetUserClaims(user);
+            return GenerateToken(claims);
         }
 
         public async Task Register(RegisterUserDTO userDTO) {
@@ -83,7 +119,7 @@ namespace api.BLL.Services {
             if (!createUserResult.Succeeded)
                 throw new Exception("User creation failed! Please check user details and try again.");
 
-            if(!await _roleManager.RoleExistsAsync(Enum.GetName(RoleEnum.DEVELOPER))) {
+            if (!await _roleManager.RoleExistsAsync(Enum.GetName(RoleEnum.DEVELOPER))) {
                 await _roleManager.CreateAsync(new IdentityRole(Enum.GetName(RoleEnum.DEVELOPER)));
             }
 
@@ -93,7 +129,7 @@ namespace api.BLL.Services {
 
         }
 
-        private string GenerateToken(IEnumerable<Claim> claims) {
+        public string GenerateToken(IEnumerable<Claim> claims) {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWTKey:Secret"]));
             var tokenDescriptor = new SecurityTokenDescriptor {
                 Issuer = _configuration["JWTKey:ValidIssuer"],

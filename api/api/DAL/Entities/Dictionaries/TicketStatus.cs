@@ -4,7 +4,7 @@ namespace api.DAL.Entities.Dictionaries
 {
     public class TicketStatus: BaseEntityDictionary
     {
-        public virtual Project Project { get; set; }
+
 
     }
 }

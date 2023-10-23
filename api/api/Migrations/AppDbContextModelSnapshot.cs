@@ -169,7 +169,7 @@ namespace api.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatorUserId")
                         .IsRequired()
@@ -186,11 +186,11 @@ namespace api.Migrations
                     b.Property<string>("NameL2")
                         .HasColumnType("text");
 
-                    b.Property<int>("ProjectId")
+                    b.Property<int?>("ProjectId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("Updated")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdaterUserName")
                         .IsRequired()
@@ -207,7 +207,7 @@ namespace api.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("TicketCategories");
+                    b.ToTable("TicketCategory");
                 });
 
             modelBuilder.Entity("api.DAL.Entities.Dictionaries.TicketPriority", b =>
@@ -225,7 +225,7 @@ namespace api.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatorUserId")
                         .IsRequired()
@@ -242,11 +242,11 @@ namespace api.Migrations
                     b.Property<string>("NameL2")
                         .HasColumnType("text");
 
-                    b.Property<int>("ProjectId")
+                    b.Property<int?>("ProjectId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("Updated")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdaterUserName")
                         .IsRequired()
@@ -263,7 +263,7 @@ namespace api.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("TicketPriorities");
+                    b.ToTable("TicketPriority");
                 });
 
             modelBuilder.Entity("api.DAL.Entities.Dictionaries.TicketStatus", b =>
@@ -281,7 +281,7 @@ namespace api.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatorUserId")
                         .IsRequired()
@@ -298,11 +298,11 @@ namespace api.Migrations
                     b.Property<string>("NameL2")
                         .HasColumnType("text");
 
-                    b.Property<int>("ProjectId")
+                    b.Property<int?>("ProjectId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("Updated")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdaterUserName")
                         .IsRequired()
@@ -319,7 +319,7 @@ namespace api.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("TicketStatuses");
+                    b.ToTable("TicketStatus");
                 });
 
             modelBuilder.Entity("api.DAL.Entities.Project", b =>
@@ -340,7 +340,7 @@ namespace api.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatorUserId")
                         .IsRequired()
@@ -354,17 +354,20 @@ namespace api.Migrations
                         .HasColumnType("text");
 
                     b.Property<DateTime>("End")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("SprintLenght")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("Start")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<DateTime>("Updated")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdaterUserName")
                         .IsRequired()
@@ -397,7 +400,7 @@ namespace api.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<DateTime>("Created")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("CreatorUserId")
                         .IsRequired()
@@ -411,7 +414,7 @@ namespace api.Migrations
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("Updated")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("UpdaterUserName")
                         .IsRequired()
@@ -422,6 +425,7 @@ namespace api.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("UserId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<long>("VersionNumber")
@@ -434,6 +438,85 @@ namespace api.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("ProjectUsers");
+                });
+
+            modelBuilder.Entity("api.DAL.Entities.Ticket", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("Clone")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("CreatorUserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("CreatorUserName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("DeadLine")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("PriorityId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ResponsibleUserId")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("StatusId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("UpdaterUserName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UpdatorUserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<long>("VersionNumber")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("PriorityId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("ResponsibleUserId");
+
+                    b.HasIndex("StatusId");
+
+                    b.ToTable("Tickets");
                 });
 
             modelBuilder.Entity("api.DAL.Entities.User", b =>
@@ -568,9 +651,7 @@ namespace api.Migrations
                 {
                     b.HasOne("api.DAL.Entities.Project", "Project")
                         .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProjectId");
 
                     b.Navigation("Project");
                 });
@@ -579,9 +660,7 @@ namespace api.Migrations
                 {
                     b.HasOne("api.DAL.Entities.Project", "Project")
                         .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProjectId");
 
                     b.Navigation("Project");
                 });
@@ -590,9 +669,7 @@ namespace api.Migrations
                 {
                     b.HasOne("api.DAL.Entities.Project", "Project")
                         .WithMany()
-                        .HasForeignKey("ProjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProjectId");
 
                     b.Navigation("Project");
                 });
@@ -607,11 +684,48 @@ namespace api.Migrations
 
                     b.HasOne("api.DAL.Entities.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Project");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("api.DAL.Entities.Ticket", b =>
+                {
+                    b.HasOne("api.DAL.Entities.Dictionaries.TicketCategory", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("api.DAL.Entities.Dictionaries.TicketPriority", "Priority")
+                        .WithMany()
+                        .HasForeignKey("PriorityId");
+
+                    b.HasOne("api.DAL.Entities.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("api.DAL.Entities.User", "ResponsibleUser")
+                        .WithMany()
+                        .HasForeignKey("ResponsibleUserId");
+
+                    b.HasOne("api.DAL.Entities.Dictionaries.TicketStatus", "Status")
+                        .WithMany()
+                        .HasForeignKey("StatusId");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Priority");
+
+                    b.Navigation("Project");
+
+                    b.Navigation("ResponsibleUser");
+
+                    b.Navigation("Status");
                 });
 
             modelBuilder.Entity("api.DAL.Entities.User", b =>

@@ -1,4 +1,5 @@
 using api;
+using api.BLL.MappingProfiles;
 using api.DAL.Context;
 using api.DAL.Entities;
 using api.Shared.Attributes;
@@ -57,6 +58,11 @@ builder.Services.AddResponseCompression(options => {
     options.Providers.Add<GzipCompressionProvider>();
 });
 
+builder.Services.AddAutoMapper(options => {
+    options.AddProfile<TicketProfile>();
+    options.AddProfile<UserProfile>();
+    options.AddProfile<ProjectProfile>();
+});
 
 builder.Services.AddLogging();
 builder.Services.AddControllers().AddJsonOptions(options => {
