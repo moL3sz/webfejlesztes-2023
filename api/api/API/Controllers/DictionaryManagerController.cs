@@ -4,6 +4,8 @@ using api.BLL.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.API.Controllers {
+
+    [Tags("Egyságes szótárkezelő vezérlő")]
     public class DictionaryManagerController : BaseController {
         private readonly IDictionaryService _service;
 

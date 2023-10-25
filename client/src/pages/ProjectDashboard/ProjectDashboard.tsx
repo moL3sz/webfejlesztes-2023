@@ -7,6 +7,7 @@ import {GroupItem, Label, RequiredRule, SimpleItem} from "devextreme-react/form"
 import {DxHtmlEditorDefault} from "../../config/dxDefault/dxHtmlEditor.default.ts";
 import {DashboardCard} from "../Dashboard/components/DashboardCard/DashboardCard.tsx";
 import {BurnDownChart} from "./components/BurnDownChart.tsx";
+import {KanbanBoard} from "./components/KanbanBoard/KanbanBoard.tsx";
 
 
 export const ProjectDashboard = () => {
@@ -46,16 +47,17 @@ export const ProjectDashboard = () => {
 					}
 				}}/>
 			</Toolbar>
-			<div className={"project-container grid md:grid-cols-1 lg:grid-cols-2 grid-cols-1 gap-5"}>
+			<div className={"project-container grid md:grid-cols-1 lg:grid-cols-2 grid-cols-1 gap-5 p-5"}>
 				<DashboardCard colSpan={"full"}>
 					<TicketList ref={ticketListRef} formRef={ticketFormRef} loadTicket={loadTicketById}
 								popUpRef={addTicketPopupRef}/>
 				</DashboardCard>
-				<DashboardCard>
-				<BurnDownChart/>
+				<DashboardCard colSpan={"full"}>
+					<BurnDownChart/>
 				</DashboardCard>
-				<DashboardCard/>
-				<DashboardCard/>
+				<DashboardCard colSpan={"full"}>
+					<KanbanBoard/>
+				</DashboardCard>
 			</div>
 
 			{/* Add ticket */}

@@ -37,7 +37,7 @@ export const Navbar = ()=>{
 			{
 				authenticated ?  <Popover target={"#user-auth-banner-panel"}  showEvent={"click"} ref={popOverRef} width={250}>
 					<div className={"flex flex-col"}>
-						<Link to={routes.login} className={"text-white active:bg-zinc-700 p-2 rounded-lg flex items-center space-x-5"}>
+						<Link to={routes.user.to +user?.nameid} className={"text-white active:bg-zinc-700 p-2 rounded-lg flex items-center space-x-5"}>
 							<i className={"dx-icon dx-icon-card"}></i><span>Profile</span>
 						</Link>
 						<div className="divider"></div>

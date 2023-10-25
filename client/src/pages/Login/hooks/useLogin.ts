@@ -6,6 +6,7 @@ import {getApi} from "../../../config/api/api.ts";
 import {url} from "../../../utils/urlConstructor.ts";
 import {defaultNotify} from "../../../config/dxDefault/toast.default.ts";
 import {useCookies} from "react-cookie";
+import {routes} from "../../../config/routes.ts";
 
 
 export const useLogin = ()=>{
@@ -17,7 +18,7 @@ export const useLogin = ()=>{
 	const [cookies, setCookie, removeCookie] = useCookies(["AUTH_TOKEN"])
 
 	/* Refs */
-	const formRef = useRef<Form>()
+	const formRef = useRef<Form>(null)
 
 	/* Callbacks */
 
@@ -46,6 +47,7 @@ export const useLogin = ()=>{
 			})
 
 			defaultNotify("Sikeres bejelentkezés", "success")
+			navigate(routes.dashboard)
 		}
 		catch (e){
 			console.log(e)

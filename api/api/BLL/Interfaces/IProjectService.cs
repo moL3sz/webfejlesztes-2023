@@ -7,5 +7,7 @@ namespace api.BLL.Interfaces {
 
         Task<List<ProjectBurnDownChartDTO>> GetProjectBurnDownChart(int projectId);
 
+        Task<List<KanbanDTO>> GetKanbanBoard(int projectId);
+
     }
 }

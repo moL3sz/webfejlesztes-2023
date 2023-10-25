@@ -48,7 +48,6 @@ export const useProjectDashboard = () => {
 	const saveTicket = useCallback(async () => {
 		const validationStatus = ticketFormRef.current?.instance.validate();
 		const isEditing = ticketFormRef.current?.instance.option("isEditing");
-		console.log(isEditing)
 		if (!validationStatus?.isValid) return;
 
 		let formData = ticketFormRef.current?.instance.option("formData");
@@ -60,8 +59,8 @@ export const useProjectDashboard = () => {
 			method: isEditing ? "PUT" : "POST",
 			data: formData
 		})
-
-		defaultNotify("Sikeresen létrehoztad a feladatot", "success")
+		const message = isEditing ? "Sikeresen módosítottad a feladatot" : "Sikeresen létrehoztad a feladatot"
+		defaultNotify(message, "success")
 		addTicketPopupRef.current?.instance.hide()
 		ticketListRef.current?.update();
 

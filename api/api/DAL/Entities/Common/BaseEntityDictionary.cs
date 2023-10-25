@@ -12,6 +12,15 @@
         /// </summary>
         public string? NameL2 { get; set; }
 
+
+        /// <summary>
+        /// Fátis szám
+        /// </summary>
+        public int? OrderNumber { get; set; }
+
+        /// <summary>
+        /// Project
+        /// </summary>
         public int? ProjectId { get; set; }
 
         public virtual Project? Project { get; set; }

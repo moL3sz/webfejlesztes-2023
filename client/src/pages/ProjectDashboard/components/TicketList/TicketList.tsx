@@ -56,7 +56,7 @@ export const TicketList = forwardRef<TicketListRef, TicketListProps>(({popUpRef,
 				<Item name="addRowButton" location="after"/>
 				<Item name="exportButton" location="after"/>
 
-				<Column dataField={"ResponsibleUserId"} caption={t("table.ticketList.caption.ResponsibleUserId")}
+				<Column dataField={"ResponsibleUserId"} width={100} caption={t("table.ticketList.caption.ResponsibleUserId")}
 						cellRender={(data) => {
 							const target = `ticket_${data.row.data.Id}`;
 							return data.text ? <>
@@ -82,6 +82,11 @@ export const TicketList = forwardRef<TicketListRef, TicketListProps>(({popUpRef,
 					<Lookup dataSource={dataSource.TicketStatus} valueExpr={"Id"} displayExpr={"NameL1"}/>
 
 				</Column>
+				<Column dataField={"DeadLine"} caption={t("table.ticketList.caption.DeadLine")} dataType={"datetime"}
+					defaultSortIndex={0} defaultSortOrder={"asc"}>
+
+
+				</Column>
 
 				<Column dataField={"PriorityId"} caption={t("table.ticketList.caption.PriorityId")}>
 					<Lookup dataSource={dataSource.TicketPriority} valueExpr={"Id"} displayExpr={"NameL1"}/>
@@ -89,7 +94,7 @@ export const TicketList = forwardRef<TicketListRef, TicketListProps>(({popUpRef,
 
 				<Column type={"buttons"}>
 					<Button icon={"eyeopen"} onClick={(data) => {
-						loadTicket(data.row.key).then((data:any)=>{
+						loadTicket(data.row.key).then((data: any) => {
 							formRef.current?.instance.option("formData", data);
 
 						})

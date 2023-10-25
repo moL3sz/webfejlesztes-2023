@@ -22,6 +22,7 @@ namespace api.BLL.Services {
             _repo = repo;
             _recordInfoHelper = recordInfoHelper;
             _mapper = mapper;
+
         }
         public async Task<List<TicketCompactDTO>> GetAll() {
             var Tickets = await _repo.GetAll();
@@ -33,6 +34,8 @@ namespace api.BLL.Services {
         }
 
         public async Task<TicketFullViewDTO> Insert(TicketFullViewDTO dto) {
+
+
 
             var entity = _mapper.Map<Ticket>(dto);
             _recordInfoHelper.SetNewRecordInfo(ref entity);

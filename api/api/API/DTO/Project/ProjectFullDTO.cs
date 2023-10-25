@@ -13,5 +13,6 @@
         public required DateTime End { get; set; }
 
         public int? SprintLength { get; set; }
+
     }
 }

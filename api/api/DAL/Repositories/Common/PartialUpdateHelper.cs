@@ -7,14 +7,18 @@ using api.DAL.Entities.Common;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using api.Shared.Extensions;
+using api.BLL.Interfaces;
 
 namespace api.DAL.Repositories.Common {
     public class PartialUpdateHelper : IPartialUpdateHelper {
 
         private readonly AppDbContext _db;
+        private readonly IRecordInfoHelper _recordInfoHelper;
 
-        public PartialUpdateHelper(AppDbContext db) {
+
+        public PartialUpdateHelper(AppDbContext db, IRecordInfoHelper recordInfoHelper) {
             _db = db;
+            _recordInfoHelper = recordInfoHelper;
         }
         private Type GetNullableType(Type type) {
             // Use Nullable.GetUnderlyingType() to remove the Nullable<T> wrapper if type is already nullable.
@@ -66,9 +70,8 @@ namespace api.DAL.Repositories.Common {
                 throw new NullReferenceException("Nincs Version number!");
             }
             long prevVersionNumber = (long)propVersionNumber!.GetValue(dbEntity)!;
-
-            // Növeljük a verzió számot!
-            propVersionNumber.SetValue(dbEntity, prevVersionNumber + 1);
+            var dbEntityNew = (BaseEntity)dbEntity;
+            _recordInfoHelper.SetModifiedRecordInfo(ref dbEntityNew);
 
             _db.SaveChanges();
             return dbEntity;

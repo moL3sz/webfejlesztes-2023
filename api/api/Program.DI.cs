@@ -21,6 +21,7 @@ namespace api
             services.AddScoped<IProjectUserService, ProjectUserService>();
             services.AddScoped<ITicketService, TicketService>();
             services.AddScoped<IDictionaryService, DictionaryService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<IJWTHandler, JWTHandler>();
 
 

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.API.Controllers {
+    [Authorize]
     public class ProjectUserController : BaseController {
         private readonly IProjectUserService _projectUserService;
 
@@ -12,24 +13,42 @@ namespace api.API.Controllers {
         }
 
 
-        [Authorize]
         [HttpGet("getProjectsByUser/{userId}")]
-
         public async Task<IActionResult> GetProjectsByUser(string userId) {
         
             var projects =await _projectUserService.GetProjectsByUser(userId);
-
             return Ok(projects);
         
         }
-        [Authorize]
-        [HttpGet("getUsersByProject/{projectId}")]
 
+
+        [HttpGet("getUsersByProject/{projectId}")]
         public async Task<IActionResult> GetProjectsByUser(int projectId) {
 
             var users = await _projectUserService.GetUsersByProject(projectId);
             return Ok(users);
 
+        }
+
+
+        [HttpGet("getPendingProjectsByUser/{userId}")]
+        public async Task<IActionResult> GetPendingProjectByUser(string userId) {
+
+            var projects = await _projectUserService.GetPendingProjectByUser(userId);
+            return Ok(projects);
+
+        }
+
+        [HttpGet("acceptProject/{projectId}")]
+        public async Task<IActionResult> AcceptProjectByUser([FromBody]int projectId) {
+            try {
+                await _projectUserService.AcceptProject(projectId);
+                return Ok();
+            }
+            catch (Exception ex) {
+
+                throw new Exception("Nem sikerült elfogadni a projektet", ex);
+            }
         }
     }
 }

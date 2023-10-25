@@ -55,7 +55,7 @@ export const NavigationList = memo(() => {
 				}
 			}}
 			expandAllEnabled={true}
-			className={"bg-zinc-800"}
+			style={{backgroundColor: "#1b1b20"}}
 
 		/>
 	)

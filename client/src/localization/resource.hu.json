@@ -8,7 +8,7 @@
     "data": {
       "main": "Adatok",
       "TicketPriority": "Feladat prioritás",
-      "TicketStatus": "Feladat stáusza",
+      "TicketStatus": "Feladat státusz",
       "TicketCategory": "Feladat kategória"
     },
     "user": {
@@ -86,6 +86,16 @@
       "caption": {
         "NameL1": "Név",
         "NameL2": "Név (második nyelven)"
+      }
+    },
+    "project": {
+      "caption": {
+        "Title": "Projekt címe",
+        "Description": "Leírás",
+        "Code": "Projekt kód",
+        "Accepted": "Elfogadva",
+        "Start": "Kezdete",
+        "End": "Vége"
       }
     }
   }

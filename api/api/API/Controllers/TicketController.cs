@@ -3,9 +3,13 @@ using api.API.DTO.Project;
 using api.API.DTO.Ticket;
 using api.BLL.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.API.Controllers {
+
+    [Authorize]
+    [Tags("Feladat / Jegy vezerlő")]
     public class TicketController : BaseController {
 
         private readonly ITicketService _service;

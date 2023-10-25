@@ -8,6 +8,9 @@ namespace api.BLL.Interfaces {
         Task AddUserToProjectAsync(ProjectUserDTO dto);
 
         Task<List<ProjectCompactDTO>> GetProjectsByUser(string userId);
+        Task<List<ProjectCompactDTO>> GetPendingProjectByUser(string userId);
         Task<List<UserDTO>> GetUsersByProject(int projectId);
+
+        Task AcceptProject(int projectId);
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.API.Controllers {
 
+    [Tags("Projekt vezerlő")]
     [Authorize]
     public class ProjectController : BaseController {
 
@@ -57,6 +58,21 @@ namespace api.API.Controllers {
             var dataSet = await _service.GetProjectBurnDownChart(projectId);
             return Ok(dataSet);
 
+        }
+
+
+        [HttpGet("getKanbanBoard/{projectId}")]
+
+        public async Task<IActionResult> GetKanbanBoard(int projectId) {
+
+            try {
+                var statusTickets = await _service.GetKanbanBoard(projectId);
+                return Ok(statusTickets);
+            }
+            catch (Exception ex) {
+
+                return BadRequest(ex);
+            }
         }
 
     }

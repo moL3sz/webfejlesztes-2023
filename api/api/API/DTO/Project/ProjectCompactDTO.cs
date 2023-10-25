@@ -10,5 +10,7 @@
 
         public required DateTime Start { get; set; }
         public required DateTime End { get; set; }
+        public bool Accepted { get; set; }
+
     }
 }

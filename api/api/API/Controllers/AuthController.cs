@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 namespace api.API.Controllers {
 
-    [Tags("Hitelesítő kontroller")]
+    [Tags("Hitelesítő vezérlő")]
     public class AuthController : BaseController {
 
         private readonly IAuthService _authService;

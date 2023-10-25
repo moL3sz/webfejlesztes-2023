@@ -1,4 +1,5 @@
-﻿using api.API.DTO.Project;
+﻿using api.API.DTO.Common;
+using api.API.DTO.Project;
 using api.API.DTO.ProjectUser;
 using api.API.DTO.Ticket;
 using api.BLL.Enums;
@@ -28,6 +29,7 @@ namespace api.BLL.Services {
             UserManager<User> userManager,
             IUserHelper userHelper,
             ITicketRepository ticketRepository, ITicketService ticketService) {
+
             _repo = repo;
             _recordInfoHelper = recordInfoHelper;
             _mapper = mapper;
@@ -87,17 +89,32 @@ namespace api.BLL.Services {
             return _mapper.Map<ProjectFullDTO>(deletedEntity);
         }
 
+        public async Task<List<KanbanDTO>> GetKanbanBoard(int projectId) {
+
+            var tickets = await _ticketRepository.GetByProject(projectId);
+
+            var statusGroups = tickets.GroupBy(x => new { x.Status.Id, x.Status.OrderNumber, x.Status.NameL1 }).Select(x => {
+
+                return new KanbanDTO {
+                    Status = new BaseDictionaryDTO { Id = x.Key.Id, NameL1 = x.Key.NameL1, OrderNumber = x.Key.OrderNumber },
+                    Tickets = _mapper.Map<List<TicketCompactDTO>>(x)
+                };
+            });
+
+            return statusGroups.ToList();
+        }
+
         public async Task<List<ProjectBurnDownChartDTO>> GetProjectBurnDownChart(int projectId) {
 
             var tickets = await _ticketRepository.GetByProject(projectId);
             var project = await _repo.GetById(projectId);
 
             List<ProjectBurnDownChartDTO> result = new List<ProjectBurnDownChartDTO>();
-            
+
             // Step 
             for (DateTime currentDate = project.Start; currentDate <= project.End; currentDate = currentDate.AddDays(1)) {
-                var tasks = tickets.Where(x => !_ticketService.IsTicketDone(x) && DateTime.Now.AddDays(5) > currentDate).Select(x=>x.Title).ToList();
-                var expectedRemainging =  tickets.Where(x => x.DeadLine > currentDate).Count();
+                var tasks = tickets.Where(x => !_ticketService.IsTicketDone(x) && DateTime.Now.AddDays(5) > currentDate).Select(x => x.Title).ToList();
+                var expectedRemainging = tickets.Where(x => x.DeadLine > currentDate).Count();
                 result.Add(new ProjectBurnDownChartDTO { Day = currentDate, ExpectedRemainingTasksCount = expectedRemainging, RemainingTasks = tasks });
             }
             return result;

@@ -6,6 +6,10 @@ export const routes = {
 		edit:  "/projects/edit/:id",
 		manage: "/project/:id"
 	},
+	user:{
+		to: "/user/profile/",
+		profile:"/user/profile/:userId"
+	},
 	dictionaries:{
 		manager: "/project/:id/data/:dictionaryName",
 	},

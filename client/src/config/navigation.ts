@@ -35,7 +35,7 @@ export const NavigationListData: NavigationListItemGroupType[] = [
 		}, {
 			icon: "minus",
 			path: routes.projects.manage + "/data/TicketStatus",
-			text: "menu.data.TicketPriority"
+			text: "menu.data.TicketStatus"
 		}, {
 			icon: "minus",
 			path: routes.projects.manage + "/data/TicketPriority",

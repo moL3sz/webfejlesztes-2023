@@ -26,3 +26,55 @@ div.user-banner{
     margin-left: 0.3em !important;
     font-size: medium !important;
 }
+.profile-pic{
+    border-radius: 50%;
+}
+.card{
+    box-shadow: 0 0 6px 1px rgba(0, 0, 0, 0.15);
+    border-radius: 0.5em;
+    padding: 1.5em;
+    background-color: #1b1b20 !important;
+
+}
+.half > div{
+    flex: 1;
+}
+.contact-icon {
+    background-color: rgba(255, 69, 0, 0.15);
+    border-radius: 50%;
+}
+.contact-icon > span{
+    transform: translateY(-3px);
+}
+
+#kanban {
+    white-space: nowrap;
+    height: 550px;
+}
+
+.list {
+    border-radius: 8px;
+    margin: 5px;
+    background-color: rgba(86, 86, 86, 0.4);
+    display: inline-block;
+    vertical-align: top;
+    white-space: normal;
+}
+
+.list-title {
+    font-size: 16px;
+    padding: 10px;
+    padding-left: 30px;
+    margin-bottom: -10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.scrollable-list {
+    height: 450px !important;
+    width: 300px;
+}
+
+.sortable-cards {
+    min-height: 500px;
+}

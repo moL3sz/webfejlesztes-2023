@@ -7,9 +7,11 @@ namespace api.API.Controllers.Common {
     public class BaseController : Controller {
 
 
+        /// <summary>
+        /// Logoló
+        /// </summary>
         private readonly ILogger _logger;
 
-        private readonly HttpContextAccessor _contextAccessor = new HttpContextAccessor();
 
         public BaseController(ILogger logger) {
             _logger = logger;
@@ -17,9 +19,13 @@ namespace api.API.Controllers.Common {
         }
 
         public override Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next) {
+            _logger.LogInformation(1, $"API hívás kezdet: {context.ActionDescriptor.DisplayName} {context.ActionDescriptor.Id}");
+
             return base.OnActionExecutionAsync(context, next);
         }
         public override void OnActionExecuted(ActionExecutedContext context) {
+            _logger.LogInformation(1, $"API hívás vége: {context.ActionDescriptor.DisplayName} {context.ActionDescriptor.Id}");
+
             base.OnActionExecuted(context);
         }
     }

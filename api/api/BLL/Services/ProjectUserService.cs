@@ -10,19 +10,25 @@ namespace api.BLL.Services {
     public class ProjectUserService : IProjectUserService {
 
         private readonly IProjectUserRepository _repo;
-        private readonly Mapper _mapper;
+        private readonly IMapper _mapper;
         private readonly IRecordInfoHelper _recordInfoHelper;
+        private readonly IUserHelper _userHelper;
 
 
 
-        public ProjectUserService(IProjectUserRepository repo, IRecordInfoHelper recordInfoHelper) {
+        public ProjectUserService(IProjectUserRepository repo, IRecordInfoHelper recordInfoHelper, IMapper mapper, IUserHelper userHelper) {
             _repo = repo;
-            _mapper = new Mapper(new MapperConfiguration(cfg => {
-                cfg.CreateMap<Project, ProjectCompactDTO>().ReverseMap();
-                cfg.CreateMap<ProjectUser, ProjectUserDTO>().ReverseMap();
-                cfg.CreateMap<User, UserDTO>().ReverseMap();
-            }));
             _recordInfoHelper = recordInfoHelper;
+            _mapper = mapper;
+            _userHelper = userHelper;
+        }
+
+        public async Task AcceptProject(int projectId) {
+            var user = await _userHelper.GetCurrentUser();
+            if (user == null) {
+                throw new UnauthorizedAccessException();
+            }
+            await _repo.AcceptProject(user.Id, projectId);
         }
 
         public async Task AddUserToProjectAsync(ProjectUserDTO dto) {
@@ -31,9 +37,14 @@ namespace api.BLL.Services {
             await _repo.AddUserToProjectAsync(entity);
         }
 
+
+        public async Task<List<ProjectCompactDTO>> GetPendingProjectByUser(string userId) {
+            var projects = await _repo.GetProjectsByUser(userId);
+            return _mapper.Map<List<ProjectCompactDTO>>(projects.Where(x => !x.Accepted).Select(x => x.Project).ToList());
+        }
         public async Task<List<ProjectCompactDTO>> GetProjectsByUser(string userId) {
             var projects = await _repo.GetProjectsByUser(userId);
-            return _mapper.Map<List<ProjectCompactDTO>>(projects);
+            return _mapper.Map<List<ProjectCompactDTO>>(projects.Where(x => x.Accepted).Select(x => x.Project).ToList());
         }
 
         public async Task<List<UserDTO>> GetUsersByProject(int projectId) {

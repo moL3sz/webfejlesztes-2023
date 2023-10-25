@@ -16,6 +16,7 @@ import {loadMessages, locale} from "devextreme/localization";
 import huMessages from "devextreme/localization/messages/hu.json";
 import enMessages from "devextreme/localization/messages/en.json";
 import {DictionaryManager} from "./pages/DictionaryManager/DictionaryManager.tsx";
+import {UserProfile} from "./pages/Profile/UserProfile.tsx";
 function App() {
 	loadMessages(huMessages);
 	loadMessages(enMessages);
@@ -34,6 +35,7 @@ function App() {
 							<Route path={routes.dashboard} element={<Dashboard/>}/>
 							<Route path={routes.projects.manage} element={<ProjectDashboard/>}/>
 							<Route path={routes.dictionaries.manager} element={<DictionaryManager/>}/>
+							<Route path={routes.user.profile} element={<UserProfile/>}/>
 
 						</Routes>
 					</Layout>
