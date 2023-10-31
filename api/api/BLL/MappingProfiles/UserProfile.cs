@@ -8,6 +8,8 @@ namespace api.BLL.MappingProfiles {
         public UserProfile() {
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<User, UserFullDTO>().ReverseMap();
+            CreateMap<RegisterUserDTO, User>().ReverseMap();
+            CreateMap<UserDTO, User>().ReverseMap();
         }
     }
 }

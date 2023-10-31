@@ -16,23 +16,29 @@ namespace api.BLL.Services {
     public class AuthService : IAuthService {
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
-        private readonly Mapper _mapper;
+        private readonly IMapper _mapper;
         private readonly ILogger<AuthService> _logger;
         private readonly IUserRepository _userRepository;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IUserHelper _userHelper;
 
-        public AuthService(UserManager<User> userManager, IConfiguration configuration, ILogger<AuthService> logger, IUserRepository userRepository, RoleManager<IdentityRole> roleManager, IUserHelper userHelper) {
+        public AuthService(UserManager<User> userManager,
+            IConfiguration configuration,
+            ILogger<AuthService> logger,
+            IUserRepository userRepository,
+            RoleManager<IdentityRole> roleManager,
+            IUserHelper userHelper,
+            IMapper mapper
+            ) {
+
+
             _userManager = userManager;
             _configuration = configuration;
-            _mapper = new Mapper(new MapperConfiguration(cfg => {
-                cfg.CreateMap<RegisterUserDTO, User>().ReverseMap();
-                cfg.CreateMap<UserDTO, User>().ReverseMap();
-            }));
             _logger = logger;
             _userRepository = userRepository;
             _roleManager = roleManager;
             _userHelper = userHelper;
+            _mapper = mapper;
         }
 
         public async Task<List<UserDTO>> GetUsers() {

@@ -1,10 +1,12 @@
-﻿using api.BLL.Helpers;
+﻿using api.API.Middlewares.Policy;
+using api.BLL.Helpers;
 using api.BLL.Interfaces;
 using api.BLL.Services;
 using api.DAL.Interfaces;
 using api.DAL.Interfaces.Common;
 using api.DAL.Repositories;
 using api.DAL.Repositories.Common;
+using Microsoft.AspNetCore.Authorization;
 
 namespace api
 {
@@ -39,6 +41,9 @@ namespace api
             services.AddScoped<IRecordInfoHelper, RecordInfoHelper>();
             services.AddScoped<IPartialUpdateHelper, PartialUpdateHelper>();
             services.AddScoped<IUserHelper, UserHelper>();
+
+            // Auth requirements
+            services.AddSingleton<IAuthorizationHandler, UserInProjectRequirementAuthorzationHandler>();
             
 
             return services;

@@ -19,7 +19,7 @@ namespace api.API.Controllers {
             _mapper = new Mapper(new MapperConfiguration(cfg => {
                 cfg.CreateMap<TicketFullViewDTO, TicketModifiableDTO>().ReverseMap();
             }));
-            
+
         }
 
 
@@ -29,6 +29,7 @@ namespace api.API.Controllers {
             return Ok(Tickets);
         }
 
+        [Authorize(Policy = "UserInProject")]
         [HttpGet("getAllByProject/{projectId}")]
         public async Task<IActionResult> GetAll(int projectId) {
             var tickets = await _service.GetTicketsByProject(projectId);
@@ -57,6 +58,19 @@ namespace api.API.Controllers {
         public async Task<IActionResult> Delete(int Id) {
             var deletedTicket = await _service.Delete(Id);
             return Ok(deletedTicket);
+        }
+
+        [HttpPut("updateStatus")]
+        public async Task<IActionResult> UpdateStatus(TicketModifiableDTO updated) {
+            try {
+                await _service.UpdateStatus(updated.Id!.Value, updated.StatusId!.Value);
+                return Ok();
+            }
+            catch (Exception) {
+
+                throw;
+            }
+        
         }
 
     }

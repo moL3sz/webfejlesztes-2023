@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace api.API.Controllers {
     [Authorize]
+    [Tags("Project - Felhasználó vezérlő")]
     public class ProjectUserController : BaseController {
         private readonly IProjectUserService _projectUserService;
 
@@ -39,8 +40,8 @@ namespace api.API.Controllers {
 
         }
 
-        [HttpGet("acceptProject/{projectId}")]
-        public async Task<IActionResult> AcceptProjectByUser([FromBody]int projectId) {
+        [HttpPut("acceptProject/{projectId}")]
+        public async Task<IActionResult> AcceptProjectByUser(int projectId) {
             try {
                 await _projectUserService.AcceptProject(projectId);
                 return Ok();

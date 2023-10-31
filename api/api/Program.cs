@@ -1,4 +1,5 @@
 using api;
+using api.API.Middlewares.Policy;
 using api.BLL.MappingProfiles;
 using api.DAL.Context;
 using api.DAL.Entities;
@@ -114,6 +115,11 @@ builder.Services.AddAuthorization(options => {
         .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
         .RequireAuthenticatedUser()
         .Build();
+    options.AddPolicy("UserInProject", policy => {
+        policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
+        policy.RequireAuthenticatedUser();
+        policy.AddRequirements(new UserInProjectRequirement());
+    });
 
 });
 

@@ -9,6 +9,7 @@ using api.DAL.Interfaces;
 using api.DAL.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 
 namespace api.BLL.Services {
     public class ProjectService : IProjectService {
@@ -101,7 +102,7 @@ namespace api.BLL.Services {
                 };
             });
 
-            return statusGroups.ToList();
+            return statusGroups.OrderBy(x=>x.Status!.OrderNumber).ToList();
         }
 
         public async Task<List<ProjectBurnDownChartDTO>> GetProjectBurnDownChart(int projectId) {
@@ -113,7 +114,7 @@ namespace api.BLL.Services {
 
             // Step 
             for (DateTime currentDate = project.Start; currentDate <= project.End; currentDate = currentDate.AddDays(1)) {
-                var tasks = tickets.Where(x => !_ticketService.IsTicketDone(x) && DateTime.Now.AddDays(5) > currentDate).Select(x => x.Title).ToList();
+                var tasks = tickets.Where(x => !_ticketService.IsTicketDone(x) && DateTime.Now > currentDate).Select(x => x.Title).ToList();
                 var expectedRemainging = tickets.Where(x => x.DeadLine > currentDate).Count();
                 result.Add(new ProjectBurnDownChartDTO { Day = currentDate, ExpectedRemainingTasksCount = expectedRemainging, RemainingTasks = tasks });
             }
@@ -121,6 +122,7 @@ namespace api.BLL.Services {
 
 
         }
+      
 
 
     }

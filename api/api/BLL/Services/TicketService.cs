@@ -63,5 +63,9 @@ namespace api.BLL.Services {
         public bool IsTicketDone(Ticket ticket) {
             return ticket.Status?.NameL1 == "Befejezve";
         }
+        public async Task UpdateStatus(int ticketId, int newStatusId) {
+            var newStatusTicket = new TicketModifiableDTO { Id = ticketId, StatusId = newStatusId };
+            await this.Update(newStatusTicket);
+        }
     }
 }
