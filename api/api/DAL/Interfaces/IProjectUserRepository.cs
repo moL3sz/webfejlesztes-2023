@@ -9,5 +9,6 @@ namespace api.DAL.Interfaces {
         Task<List<User>> GetUsersByProject(int projectId);
         Task RemoveUserFromProjectAsync(ProjectUser projectUser);
         Task AcceptProject(string userId, int projectId);
+        Task BulkAddUsersToProjectAsync(IEnumerable<ProjectUser> projectUsers);
     }
 }

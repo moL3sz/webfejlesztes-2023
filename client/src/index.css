@@ -12,9 +12,16 @@ div.user-banner{
     width: 35px;
     height: 35px;
     display: flex;
+    font-weight: bolder;
     border-radius: 50%;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
+    transition: scale 0.05s ease-in-out;
+}
+div.user-banner:hover{
+    scale: 1.15;
+    border: 1px solid gray;
 }
 .divider{
     height: 1px;
@@ -55,7 +62,7 @@ div.user-banner{
 .list {
     border-radius: 8px;
     margin: 5px;
-    background-color: rgba(86, 86, 86, 0.4);
+    border: 2px solid rgba(125, 125, 125, 0.4);
     display: inline-block;
     vertical-align: top;
     white-space: normal;

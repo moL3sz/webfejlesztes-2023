@@ -35,7 +35,6 @@ export const TicketList = forwardRef<TicketListRef, TicketListProps>(({popUpRef,
 
 	return (
 		<div>
-			<h5>Feladatok</h5>
 			<DataGrid
 				ref={dgRef}
 				dataSource={datagridStore({

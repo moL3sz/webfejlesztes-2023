@@ -1,11 +1,11 @@
-import {ScrollView, Sortable} from "devextreme-react";
+import {ScrollView} from "devextreme-react";
 import {useKanbanBoard} from "./hooks/useKanbanBoard.ts";
 import {KanbanStatusList} from "./KanbanStatusList.tsx";
 
 
 export const KanbanBoard = ()=>{
 
-	const {statusTasks} = useKanbanBoard();
+	const {statusTasks,onTaskDrop} = useKanbanBoard();
 	return (
 
 		<div id={"kanban"}>
@@ -13,21 +13,20 @@ export const KanbanBoard = ()=>{
 				className="scrollable-board"
 				direction="horizontal"
 				showScrollbar="always">
-				<Sortable
+				<div
 					className="sortable-lists"
-					itemOrientation="horizontal"
-					handle=".list-title">
-					{statusTasks.map((statusItem, listIndex) => {
+					>
+					{statusTasks.map((statusItem) => {
 						const status = statusItem.Status;
 						return <KanbanStatusList
 							key={status.Id}
 							title={status.NameL1}
-							onTaskDrop={null}
-							index={listIndex}
+							onTaskDrop={onTaskDrop}
+							index={status.Id}
 							tickets={statusItem.Tickets}
 					/>;
 					})}
-				</Sortable>
+				</div>
 			</ScrollView>
 		</div>
 	)

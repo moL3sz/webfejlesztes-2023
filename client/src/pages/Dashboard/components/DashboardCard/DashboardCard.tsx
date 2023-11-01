@@ -9,7 +9,7 @@ type DashboardCardProps = {
 }
 export  const DashboardCard = memo(({colSpan,title, children}:DashboardCardProps)=>{
 	return (
-		<div className={`${colSpan ? "col-span-" + colSpan : ""} dashboard-card rounded-lg p-4 min-h-[20em]`}>
+		<div className={`${colSpan ? "col-span-" + colSpan : ""} dashboard-card rounded-lg p-4 `}>
 			<h6>{title}</h6>
 			{children}
 		</div>

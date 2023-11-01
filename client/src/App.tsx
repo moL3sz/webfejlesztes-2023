@@ -28,7 +28,7 @@ function App() {
 
 					<Layout>
 						<Routes>
-							<Route path={"/"} element={null}/>
+							<Route path={"/"} element={<Dashboard/>}/>
 							<Route path={routes.projects.create} element={<ProjectRegistrar/>}/>
 							<Route path={routes.login} element={<Login/>}/>
 							<Route path={routes.register} element={<Register/>}/>

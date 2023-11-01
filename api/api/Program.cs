@@ -1,4 +1,5 @@
 using api;
+using api.API.Hubs;
 using api.API.Middlewares.Policy;
 using api.BLL.MappingProfiles;
 using api.DAL.Context;
@@ -53,24 +54,37 @@ builder.Services.AddAuthentication(options => {
 builder.Services.AddInjektables();
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+
 // ----- Response compression for optimal ----- //
 builder.Services.AddResponseCompression(options => {
     options.EnableForHttps = true;
     options.Providers.Add<GzipCompressionProvider>();
 });
 
+
+// ----- Add Mapper Profiles ----- //
 builder.Services.AddAutoMapper(options => {
     options.AddProfile<TicketProfile>();
     options.AddProfile<UserProfile>();
     options.AddProfile<ProjectProfile>();
+    options.AddProfile<ProjectUserProfile>();
 });
 
+
+// ----- Logging ----- //
 builder.Services.AddLogging();
+
+
+// ----- JSON SerializerOptions ----- //
 builder.Services.AddControllers().AddJsonOptions(options => {
     options.JsonSerializerOptions.PropertyNamingPolicy = null;
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 });
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+
+
+// ----- Swagger ----- //
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(swagger => {
     swagger.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme() {
@@ -98,7 +112,7 @@ builder.Services.AddSwaggerGen(swagger => {
                 });
 });
 
-
+// ----- CORS policy ----- //
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowAnyOrigin", policy => {
         policy.WithOrigins(new string[] { "http://localhost:3000" })
@@ -108,8 +122,9 @@ builder.Services.AddCors(options => {
     });
 });
 
-// ----- Response compression for optimal ----- //
 
+
+// ----- Authorization ----- //
 builder.Services.AddAuthorization(options => {
     options.DefaultPolicy =  new AuthorizationPolicyBuilder()
         .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
@@ -122,6 +137,10 @@ builder.Services.AddAuthorization(options => {
     });
 
 });
+
+// ----- Signlar R----- //
+builder.Services.AddSignalRCore();
+builder.Services.AddSignalR();
 
 
 var app = builder.Build();
@@ -142,5 +161,7 @@ app.UseAuthorization();
 app.UseAuthentication();
 
 app.MapControllers();
+
+app.MapHub<NotificationHub>("/api/notification");
 
 app.Run();

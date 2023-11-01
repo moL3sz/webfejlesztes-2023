@@ -10,5 +10,9 @@ namespace api.API.DTO.Project {
 
         public List<string> RemainingTasks { get; set; } = new List<string>();
 
+        public int IdealRemainingTasksCount { get; set; }
+
+        public int CompletedTasksCount { get; set; }
+
     }
 }

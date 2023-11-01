@@ -17,6 +17,11 @@ namespace api.DAL.Repositories {
             _db.ProjectUsers.Add(projectUser);
             await _db.SaveChangesAsync();
         }
+        public async Task BulkAddUsersToProjectAsync(IEnumerable<ProjectUser> projectUsers) {
+
+            await _db.ProjectUsers.AddRangeAsync(projectUsers);
+            await _db.SaveChangesAsync();
+        }
 
         public async Task<List<ProjectUser>> GetProjectsByUser(string userId) {
             return await _db.ProjectUsers

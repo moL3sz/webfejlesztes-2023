@@ -1,13 +1,14 @@
 import {Item as ToolbarItem, Toolbar} from "devextreme-react/toolbar";
 import {useProjectDashboard} from "./hooks/useProjectDashboard.ts";
 import {TicketList} from "./components/TicketList/TicketList.tsx";
-import {Form, Popup} from "devextreme-react";
+import {Form, Popup, TagBox} from "devextreme-react";
 import {ToolbarItem as PopupToolbarItem} from "devextreme-react/popup"
 import {GroupItem, Label, RequiredRule, SimpleItem} from "devextreme-react/form";
 import {DxHtmlEditorDefault} from "../../config/dxDefault/dxHtmlEditor.default.ts";
 import {DashboardCard} from "../Dashboard/components/DashboardCard/DashboardCard.tsx";
 import {BurnDownChart} from "./components/BurnDownChart.tsx";
 import {KanbanBoard} from "./components/KanbanBoard/KanbanBoard.tsx";
+import {MemberList} from "./components/MemberList/MemberList.tsx";
 
 
 export const ProjectDashboard = () => {
@@ -22,6 +23,10 @@ export const ProjectDashboard = () => {
 		users,
 		ticketListRef,
 		loadTicketById,
+		inviteMemberPopupRef,
+		memberListTagBoxRef,
+		invitePeople,
+		isAdminInProject
 	} = useProjectDashboard()
 
 	return (
@@ -30,14 +35,17 @@ export const ProjectDashboard = () => {
 				<ToolbarItem location={"before"} render={() => (
 					<h5>{project?.Title}</h5>
 				)}/>
-				<ToolbarItem widget={"dxButton"} location={"after"} options={{
-					text: "Emberek meghívása", //TODO: Resouce
+				<ToolbarItem widget={"dxButton"} visible={isAdminInProject} location={"after"} options={{
+					text: t("button.inviteMembers"),
 					type: "normal",
 					stylingMode: "filled",
-					icon: "message"
+					icon: "message",
+					onClick: () => {
+						inviteMemberPopupRef.current?.instance.show();
+					}
 				}}/>
 				<ToolbarItem widget={"dxButton"} location={"after"} options={{
-					text: "Feladat",//TODO: Resouce
+					text: t("button.addTicket"),
 					stylingMode: "filled",
 					icon: "plus",
 					type: "default",
@@ -48,14 +56,17 @@ export const ProjectDashboard = () => {
 				}}/>
 			</Toolbar>
 			<div className={"project-container grid md:grid-cols-1 lg:grid-cols-2 grid-cols-1 gap-5 p-5"}>
-				<DashboardCard colSpan={"full"}>
+				<DashboardCard colSpan={"full"} title={t("caption.dashboard.members")}>
+					<MemberList/>
+				</DashboardCard>
+				<DashboardCard colSpan={"full"} title={t("caption.dashboard.tasks")}>
 					<TicketList ref={ticketListRef} formRef={ticketFormRef} loadTicket={loadTicketById}
 								popUpRef={addTicketPopupRef}/>
 				</DashboardCard>
-				<DashboardCard colSpan={"full"}>
+				<DashboardCard colSpan={"full"} title={t("caption.dashboard.burndownchart")}>
 					<BurnDownChart/>
 				</DashboardCard>
-				<DashboardCard colSpan={"full"}>
+				<DashboardCard colSpan={"full"} title={t("caption.dashboard.kanban")}>
 					<KanbanBoard/>
 				</DashboardCard>
 			</div>
@@ -65,6 +76,7 @@ export const ProjectDashboard = () => {
 				   hideOnOutsideClick={true}
 				   title={t("popup.title.addTicket")}
 				   ref={addTicketPopupRef}
+				   showCloseButton={true}
 				   onHiding={(e) => {
 					   ticketFormRef.current?.instance.resetOption("isEditing");
 					   e.component.hide();
@@ -135,6 +147,40 @@ export const ProjectDashboard = () => {
 					stylingMode: "outlined",
 					onClick: () => addTicketPopupRef.current?.instance.hide()
 				}}/>
+			</Popup>
+
+			<Popup width={"50%"}
+				   ref={inviteMemberPopupRef}
+				   hideOnOutsideClick={true}
+				   height={300}
+				   showCloseButton={true}
+				   title={t("popup.title.invitePeople")}
+				   onHiding={(e) => {
+					   e.component.hide()
+				   }}>
+				<div>
+					<TagBox acceptCustomValue={true}
+							multiline={true}
+							labelMode={"floating"}
+							label={"Email címek"} //TODO: Resource!
+							ref={memberListTagBoxRef}
+							onInitialized={(e) => {
+								e.component?.option("openOnFieldClick", false);
+							}}/>
+				</div>
+				<PopupToolbarItem toolbar={"bottom"} widget={"dxButton"} location={"after"} options={{
+					text:"Meghívás",
+					icon: "message",
+					onClick: invitePeople
+				}}/>
+				<PopupToolbarItem toolbar={"bottom"} widget={"dxButton"} location={"after"} options={{
+					icon: "remove",
+					text: "Mégse",
+					type: "danger",
+					stylingMode: "outlined",
+					onClick: () => inviteMemberPopupRef.current?.instance.hide()
+				}}/>
+
 			</Popup>
 		</div>
 	)

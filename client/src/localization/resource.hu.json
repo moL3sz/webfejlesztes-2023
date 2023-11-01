@@ -16,13 +16,17 @@
       "ownTickets": "Saját Feladataim",
       "dashboard": "Irányító pult",
       "settings": "Beállítások"
+    },
+    "menu": {
+      "main": "Főmenü"
     }
   },
   "title": {
     "projectRegistrar": "Project létrehozása",
     "login": "Bejelentkezés",
     "register": "Regisztrálás",
-    "dictionaryManager": "Szótár kezelő"
+    "dictionaryManager": "Szótár kezelő",
+    "pendingProjects": "Elfogadásra váró projektek"
   },
   "label": {
     "project": {
@@ -53,21 +57,43 @@
       "Description": "Feladat leírása",
       "ResponsibleUserId": "Felelős",
       "DeadLine": "Határidő"
+    },
+    "profile": {
+      "FirstName": "Vezetéknév",
+      "LastName": "Keresztnév",
+      "PhoneNumber": "Telefonszám",
+      "Email": "Email cím"
     }
   },
   "caption": {
-    "projectRegistrar": "Project létrehozása"
+    "projectRegistrar": "Project létrehozása",
+    "dashboard": {
+      "kanban": "Kanban tábla",
+      "tasks": "Feladatok",
+      "members": "Tagok",
+      "burndownchart": "Projekt brundown ábra"
+    },
+    "basicData": "Alap adatok",
+    "contact": "Elérhetőségek",
+    "ownProfile": "Saját profil",
+    "signOut": "Kijelentkezés",
+    "signIn": "Bejelentkezés",
+    "signUp": "Regisztráció"
   },
   "button": {
     "save": "Mentés",
     "delete": "Törlés",
     "login": "Bejelentkezés",
     "logout": "Kijelentkezés",
-    "register": "Regisztrálok"
+    "register": "Regisztrálok",
+    "inviteMembers": "Emberek meghívása",
+    "addTicket": "Feladat",
+    "uploadPhoto": "Képfeltöltés"
   },
   "popup": {
     "title": {
-      "addTicket": "Feladat létrehozása"
+      "addTicket": "Feladat létrehozása",
+      "invitePeople": "Emberek meghívása a projektbe"
     }
   },
   "table": {

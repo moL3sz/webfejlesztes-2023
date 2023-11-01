@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useRef, useState} from "react";
+import {useCallback, useEffect, useRef} from "react";
 import {useParams} from "react-router-dom";
 import {getApi} from "../../../config/api/api.ts";
 import {url} from "../../../utils/urlConstructor.ts";
@@ -19,7 +19,11 @@ export  const useUserProfile = ()=>{
 			parameter: userId
 		}))
 
+		userProfileFormRef.current?.instance.beginUpdate()
 		userProfileFormRef.current?.instance.option("formData", response.data)
+		userProfileFormRef.current?.instance.repaint();
+		userProfileFormRef.current?.instance.endUpdate()
+
 
 	},[])
 

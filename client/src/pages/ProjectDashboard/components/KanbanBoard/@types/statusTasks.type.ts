@@ -12,5 +12,6 @@ export type Ticket = {
 	Title: string,
 	Description?: string
 	DeadLine: Date,
+	ResponsibleUserId: string
 
 }

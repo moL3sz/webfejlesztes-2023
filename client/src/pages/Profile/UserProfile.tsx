@@ -3,6 +3,7 @@ import {FileUploader, Form} from "devextreme-react";
 import {ButtonItem, GroupItem, Label, SimpleItem} from "devextreme-react/form";
 import {getFromData} from "../../utils/form.util.ts";
 import {PendingProjects} from "./components/PendingProjects.tsx";
+import {useTranslation} from "react-i18next";
 
 
 export const UserProfile = () => {
@@ -10,20 +11,23 @@ export const UserProfile = () => {
 
 	const {userProfileFormRef} = useUserProfile();
 
+	const {t} = useTranslation()
 
 	return (
 		<div className={"flex half flex-col space-x-0 xl:flex-row xl:space-x-10 space-y-10 xl:space-y-0"}>
-			<Form className={""} ref={userProfileFormRef} labelMode={"floating"}>
-				<GroupItem caption={"Alap adatok"} cssClass={"card mb-5"}>
+			<Form ref={userProfileFormRef} labelMode={"floating"}>
+				<GroupItem caption={t("caption.basicData")} cssClass={"card mb-5"}>
 					<SimpleItem editorOptions={{stylingMode: "outlined"}} render={(data) => {
-						const {FirstName, LastName, Id} = getFromData(data.component);
+
+						const formData = data.component.option("formData");
+						const {FirstName, LastName,Id} = formData;
 						return <div className={"flex items-center space-x-10"}>
 
 							<img src={"https://img.freepik.com/premium-vector/man-avatar-profile-picture-vector-illustration_268834-541.jpg"} className={"w-40 profile-pic"}/>
 							<div>
 								<h5>{FirstName} {LastName}</h5>
-								<div className={"text-base text-gray-400"}>ID: {Id}</div>
-								<FileUploader stylingMode={"outlined"} selectButtonText={"Képfeltöltés"}/>
+								<div className={"text-base text-gray-400"}>Id: {Id}</div>
+								<FileUploader stylingMode={"outlined"} selectButtonText={t("button.uploadPhoto")}/>
 
 							</div>
 						</div>
@@ -32,16 +36,16 @@ export const UserProfile = () => {
 
 					<GroupItem colCount={2} >
 						<SimpleItem dataField={"FirstName"}  editorOptions={{stylingMode: "outlined"}}>
-							<Label text={"Vezetéknév"}/>
+							<Label text={t("label.profile.FirstName")}/>
 						</SimpleItem>
 						<SimpleItem dataField={"LastName"} editorOptions={{stylingMode: "outlined"}} >
-							<Label text={"Keresztnév"}/>
+							<Label text={t("label.profile.LastName")}/>
 						</SimpleItem>
 
 
 					</GroupItem>
 				</GroupItem>
-				<GroupItem caption={"Elérhetőségek"} cssClass={"card"}>
+				<GroupItem caption={t("caption.contact")} cssClass={"card"}>
 					<SimpleItem render={(e)=>{
 						const {Email, PhoneNumber} = getFromData(e.component);
 						return (
@@ -58,17 +62,15 @@ export const UserProfile = () => {
 					}}/>
 					<GroupItem colCount={2}>
 						<SimpleItem dataField={"PhoneNumber"} editorOptions={{stylingMode: "outlined"}}>
-							<Label text={"Telefonszám"}/>
+							<Label text={t("label.profile.PhoneNumber")}/>
 
 						</SimpleItem>
 						<SimpleItem dataField={"Email"} editorOptions={{stylingMode: "outlined", readOnly:true}}>
-							<Label text={"Email cím"}/>
+							<Label text={t("label.profile.Email")}/>
 
 						</SimpleItem>
 					</GroupItem>
-					<SimpleItem dataField={"A"} editorOptions={{stylingMode: "outlined"}} editorType={"dxSelectBox"}>
-						<Label text={"Státusz"}/>
-					</SimpleItem>
+
 				</GroupItem>
 
 				<ButtonItem buttonOptions={{text:"Mentés", icon:"save",type:"default"}}></ButtonItem>
@@ -79,7 +81,7 @@ export const UserProfile = () => {
 			</Form>
 
 			<div className={""}>
-				<h4>Elfogadásra váró projektek</h4>
+				<h4>{t("title.pendingProjects")}</h4>
 				<PendingProjects/>
 			</div>
 

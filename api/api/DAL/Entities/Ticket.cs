@@ -20,20 +20,40 @@ namespace api.DAL.Entities {
         /// </summary>
         public  string? Description { get; set; }
 
-
+        /// <summary>
+        /// Ketgória
+        /// </summary>
         public int? CategoryId { get; set; }
+
+        /// <summary>
+        /// Prioritás
+        /// </summary>
         public int? PriorityId { get; set; }
+
+
+        /// <summary>
+        /// Státusz
+        /// </summary>
         public int? StatusId { get; set; }
 
+
+        /// <summary>
+        /// Projekt
+        /// </summary>
         public int ProjectId { get; set; }
 
+
+        /// <summary>
+        /// Felelős
+        /// </summary>
         public string? ResponsibleUserId { get; set; }
 
+
+
+        /// <summary>
+        /// Határidő
+        /// </summary>
         public DateTime? DeadLine {  get; set; }
-
-        // Navigation properties
-
-
 
 
         /// <summary>

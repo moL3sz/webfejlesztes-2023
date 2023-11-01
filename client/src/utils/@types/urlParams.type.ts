@@ -9,5 +9,5 @@ export type UrlParamsType = {
 export type DicUrlType = {
 	dictionaryName: string,
 	action: Actions | string
-	projectId: number | string | undefined
+	projectId?: number | string | undefined
 }

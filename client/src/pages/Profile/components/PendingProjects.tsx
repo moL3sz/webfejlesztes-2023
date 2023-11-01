@@ -3,10 +3,11 @@ import {defaultDatagridConfig} from "../../../config/dxDefault/dxDatagrid.defaul
 import {usePendingProjects} from "../hooks/usePendingProjects.ts";
 
 export const PendingProjects = () => {
-	const {pendingProjectStore,acceptProject,t} = usePendingProjects()
+	const {pendingProjectStore,acceptProject,t,dgRef} = usePendingProjects()
 
 	return (<div>
 		<DataGrid
+			ref={dgRef}
 			dataSource={pendingProjectStore}
 			keyExpr={"Id"}
 			{...defaultDatagridConfig}

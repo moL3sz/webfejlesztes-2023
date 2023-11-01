@@ -8,5 +8,9 @@ export const useIsAdminInProject = ()=>{
 
 	const {user} = useUser();
 	const currentProjectId = useAppSelector(state => state.currentProject.currentProjectId)
-	return !user ? false : user.role.find(x => x === `${currentProjectId}_${RoleEnum.ADMIN}`) !== undefined
+	const _user = {...user}
+	if(typeof user?.role === "string"){
+		_user.role = [user.role] as any
+	}
+	return !user ? false : _user.role?.find(x => x === `${currentProjectId}_${RoleEnum.ADMIN}`) !== undefined
 }

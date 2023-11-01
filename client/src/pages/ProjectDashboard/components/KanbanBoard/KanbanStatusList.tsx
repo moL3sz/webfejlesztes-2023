@@ -1,5 +1,4 @@
 import {Ticket} from "./@types/statusTasks.type.ts";
-import React from "react";
 import {ScrollView, Sortable} from "devextreme-react";
 import {KanbanCard} from "./KanbanCard.tsx";
 
@@ -21,10 +20,11 @@ export const KanbanStatusList = ({tickets, title, onTaskDrop, index}: KanbanStat
 			<ScrollView
 				className="scrollable-list"
 				direction="vertical"
-				showScrollbar="always">
+				showScrollbar={"onScroll"}>
 				<Sortable
 					className="sortable-cards"
 					group="cardsGroup"
+
 					data={index}
 					onReorder={onTaskDrop}
 					onAdd={onTaskDrop}>

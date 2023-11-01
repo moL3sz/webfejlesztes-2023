@@ -6,7 +6,7 @@ import {RoleEnum} from "../core/enums/role.enum.ts";
 export const NavigationListData: NavigationListItemGroupType[] = [
 	{
 		icon: "user",
-		text: "menu.user.main",
+		text: "menu.menu.main",
 		items: [
 			{
 				icon: "home",

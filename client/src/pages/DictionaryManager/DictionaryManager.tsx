@@ -22,7 +22,7 @@ export const DictionaryManager = () => {
 		key: "Id",
 		loadUrl: dicUrl({dictionaryName: dictionaryName!, projectId: id!, action: Actions.GET_ALL_BY_PROJECT}),
 		updateUrl: dicUrl({dictionaryName: dictionaryName!, projectId: id!, action: Actions.UPDATE}),
-		deleteUrl: dicUrl({dictionaryName: dictionaryName!, projectId: id!, action: Actions.DELETE}),
+		deleteUrl: dicUrl({dictionaryName: dictionaryName!, action: Actions.DELETE}),
 		insertUrl: dicUrl({dictionaryName: dictionaryName!, projectId: id!, action: Actions.INSERT})
 	})
 	const {t} = useTranslation()

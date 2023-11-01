@@ -4,9 +4,9 @@ import {
 	CommonAxisSettings,
 	CommonSeriesSettings,
 	Grid,
-	Point,
 	Series,
-	Tooltip
+	Tooltip,
+	ValueAxis
 } from "devextreme-react/chart";
 import {useCallback, useEffect, useState} from "react";
 import {useAppSelector} from "../../../store/hooks.ts";
@@ -31,28 +31,25 @@ export const BurnDownChart = ()=>{
 	},[currentProjectId])
 	return (
 		<>
-			<Chart title={"Projekt burn down ábra"} dataSource={dataset}>
-				<CommonSeriesSettings
-					argumentField="Day"
-					stepline={1}
-					hoverMode={"none"}
+			<Chart  dataSource={dataset}>
+				<CommonSeriesSettings argumentField="Day" type="line" />
+				<Series
+					valueField="ExpectedRemainingTasksCount"
+					name="Elvárt fennmaradó feladatmennyiség"
+					color="rgba(255, 255,255,0.3)"
+					type={"splinearea"}
 				/>
 				<Series
-						valueField={"ExpectedRemainingTasksCount"}
-						name={"Elvárt"}
-						color={"#8d8d8d"}
-						type={"area"}
+					valueField="IdealRemainingTasksCount"
+					name="Ideális fennmaradó feladatmennyiség"
+					color="green"
 				/>
 				<Series
-						valueField={"RemainingTasksCount"}
-						argumentField={"Day"}
-						name={"Valós"}
-						color={"#00bdff"}
-						type={"stepline"}
-
-				>
-					<Point hoverMode={"allArgumentPoints"}/>
-				</Series>
+					valueField="CompletedTasksCount"
+					name="Elvégzett feladatok"
+					color="#ff1232"
+				/>
+				<ValueAxis title="Feladat mennyiség" />
 
 				<ArgumentAxis
 					argumentType={"datetime"}
