@@ -31,6 +31,13 @@ foreach (var userRole in userRoles) {
     authClaims.Add(new Claim(ClaimTypes.Role, userRole));
 }
 ```
+A JWT token a kliens oldalon AUTH_COOKIE-ba van tárolva melynek a lejárati dátuma megegyezik a JWT lejárati dátumával. Így mondhatjuk mint pl a Neptun eldobja a user session-t `X` idő után.
+Viszont a backend csak a Bearer Tokent fogad, nem lett megcsinálva neki hogy a AUTH_COOKIE alapján nézze a JWT-t. 
+
+A kövi security update az az lenne ebben az esetben hogy a JWT `Header` illetve `Payload` része menne egy cookieba melynek paraméterei: _(SameSite, Secure)_. 
+A signiture pedig egy másik cookieba: _(SameSite Secure HttpOnly)_. Majd egy middleware mindenek előtt ha jelen van e két cookie a kérésben ebből csinál egy tényleges Authorization HTTP fejlécet, benne a Bearer tokennel.
+
+---
 A projekten belüli dolgokhoz mint pl a feladatok lekérdezésre lett csinálva egy Auth Policy ( _UserInProject_) mely
 azt tudja hogy csak azoknak a felhasználóknak engedi lekérdezi a projekthez tartozó
 feladatokat akik benne vannak az adott projektbe.
